@@ -1,0 +1,17 @@
+{
+  "recommendations": [
+    "cschlosser.doxdocgen",
+    "dbaeumer.vscode-eslint",
+    "oderwat.indent-rainbow",
+    "esbenp.prettier-vscode",
+    "kamikillerto.vscode-colorize",
+    "vue.vscode-typescript-vue-plugin",
+    "vue.volar",
+    "ms-azuretools.vscode-docker",
+    "donjayamanne.githistory",
+    "formulahendry.auto-rename-tag",
+    "ashinzekene.nestjs",
+    "wix.vscode-import-cost",
+    "sdras.vue-vscode-snippets"
+  ]
+}

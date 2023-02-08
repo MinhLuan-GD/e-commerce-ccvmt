@@ -1,0 +1,31 @@
+{
+  "cSpell.words": ["Avenir", "nestjs", "vuex"],
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/dist/": true,
+    "**/node_modules/": true,
+    "**/tsconfig*.json": true,
+    "**/yarn.lock": true,
+    "**/.eslintrc.js": true,
+    "**/.prettierrc": true
+  },
+  "editor.formatOnSave": true,
+  "colorize.languages": [
+    "css",
+    "sass",
+    "scss",
+    "less",
+    "postcss",
+    "sss",
+    "stylus",
+    "xml",
+    "svg",
+    "vue"
+  ],
+  "cSpell.numSuggestions": 0
+}
