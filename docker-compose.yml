@@ -1,0 +1,120 @@
+services:
+  api-products:
+    container_name: mecn_api_products
+    build:
+      context: ./nest
+      dockerfile: ./apps/products/Dockerfile
+      target: development
+    command: yarn start:dev products
+    environment:
+      MONGO_DB: e-commerce
+      MONGO_HOST: mongo-primary
+      MONGO_USER: root
+      MONGO_PASS: password123
+      RABBIT_MQ_URI: amqp://rabbitmq:5672
+    depends_on:
+      - mongo-primary
+      - rabbitmq
+    volumes:
+      - ./nest:/app
+      - ./nest/node_modules:/app/node_modules
+    ports:
+      - 3001:3000
+
+  api-users:
+    container_name: mecn_api_users
+    build:
+      context: ./nest
+      dockerfile: ./apps/users/Dockerfile
+      target: development
+    command: yarn start:dev users
+    environment:
+      MONGO_DB: e-commerce
+      MONGO_HOST: mongo-primary
+      MONGO_USER: root
+      MONGO_PASS: password123
+      RABBIT_MQ_URI: amqp://rabbitmq:5672
+    depends_on:
+      - mongo-primary
+      - rabbitmq
+    volumes:
+      - ./nest:/app
+      - ./nest/node_modules:/app/node_modules
+    ports:
+      - 3002:3000
+
+  api-auth:
+    container_name: mecn_api_auth
+    build:
+      context: ./nest
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    command: yarn start:dev auth
+    environment:
+      JWT_EXPIRATION: 7d
+      JWT_SECRET: secret123
+      GOOGLE_CLIENT_ID: 
+      GOOGLE_SECRET: 
+      RABBIT_MQ_URI: amqp://rabbitmq:5672
+    depends_on:
+      - mongo-primary
+      - rabbitmq
+    volumes:
+      - ./nest:/app
+      - ./nest/node_modules:/app/node_modules
+    ports:
+      - 3003:3000
+
+  api-orders:
+    container_name: mecn_api_orders
+    build:
+      context: ./nest
+      dockerfile: ./apps/orders/Dockerfile
+      target: development
+    command: yarn start:dev orders
+    environment:
+      MONGO_DB: e-commerce
+      MONGO_HOST: mongo-primary
+      MONGO_USER: root
+      MONGO_PASS: password123
+      RABBIT_MQ_URI: amqp://rabbitmq:5672
+    depends_on:
+      - mongo-primary
+    volumes:
+      - ./nest:/app
+      - ./nest/node_modules:/app/node_modules
+    ports:
+      - 3004:3000
+
+  rabbitmq:
+    container_name: mecn_rabbitmq
+    image: rabbitmq:3-management
+    ports:
+      - 15672:15672
+      - 5672:5672
+
+  mongo-primary:
+    container_name: mecn_mongo_primary
+    image: mongo:6.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password123
+    volumes:
+      - 'mongodb_master_data:/data/db'
+
+  mongo-express:
+    container_name: mecn_mongo_express
+    image: mongo-express
+    depends_on:
+      - mongo-primary
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password123
+      ME_CONFIG_MONGODB_URL: mongodb://root:password123@mongo-primary:27017/
+
+volumes:
+  mongodb_master_data:
+    driver: local
