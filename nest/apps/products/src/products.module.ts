@@ -3,6 +3,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Product, ProductSchema } from './schemas/product.schema';
 import * as Joi from 'joi';
 
 @Module({
@@ -18,6 +20,7 @@ import * as Joi from 'joi';
       }),
     }),
     DatabaseModule,
+    MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
     RmqModule,
   ],
   controllers: [ProductsController],
