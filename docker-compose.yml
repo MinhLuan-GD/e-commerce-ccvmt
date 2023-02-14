@@ -86,6 +86,27 @@ services:
     ports:
       - 3004:3000
 
+  api-categories:
+    container_name: mecn_api_categories
+    build:
+      context: ./nest
+      dockerfile: ./apps/categories/Dockerfile
+      target: development
+    command: yarn start:dev categories
+    environment:
+      MONGO_DB: e-commerce
+      MONGO_HOST: mongo-primary
+      MONGO_USER: root
+      MONGO_PASS: password123
+      RABBIT_MQ_URI: amqp://rabbitmq:5672
+    depends_on:
+      - mongo-primary
+    volumes:
+      - ./nest:/app
+      - /app/node_modules
+    ports:
+      - 3004:3000
+
   rabbitmq:
     container_name: mecn_rabbitmq
     image: rabbitmq:3-management
