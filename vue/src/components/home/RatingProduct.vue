@@ -2,10 +2,7 @@
   <div :class="$style.container">
     <h2>Sản phẩm nổi bật</h2>
     <p>Những sản phẩm mới được thiết kế cho mùa hè</p>
-    <div
-      :class="$style.procontaniner"
-      onclick="window.location.href='sproduct.html';"
-    >
+    <div :class="$style.procontaniner" onclick="window.location.href='sproduct.html';">
       <!-- List product -->
 
       <div :class="$style.pro">

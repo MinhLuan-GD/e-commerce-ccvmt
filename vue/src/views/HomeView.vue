@@ -2,6 +2,7 @@
   <Header />
   <Banner />
   <RatingProduct />
+  <NewProduct />
   <Footer />
 </template>
 
@@ -9,6 +10,7 @@
 import Footer from "@/components/footer/Footer.vue";
 import Banner from "@/components/home/Banner.vue";
 import RatingProduct from "@/components/home/RatingProduct.vue";
+import NewProduct from "@/components/home/NewProduct.vue";
 import Header from "@/components/header/Header.vue";
 
 import { Options, Vue } from "vue-class-component";
@@ -18,6 +20,7 @@ import { Options, Vue } from "vue-class-component";
     Header,
     Banner,
     RatingProduct,
+    NewProduct,
     Footer,
   },
 })
