@@ -298,6 +298,10 @@ export default class RatingProduct extends Vue {}
       outline: none;
       transition: 0.2s;
     }
+    & button:hover {
+      background: #088178;
+      color: #fff;
+    }
   }
 }
 </style>
