@@ -25,7 +25,7 @@
       </div>
 
       <div :class="$style.pro">
-        <img src="@/assets/img/products/f1.jpg" alt="" />
+        <img src="@/assets/img/products/f2.jpg" alt="" />
         <div :class="$style.des">
           <span>Thương hiệu Adidas</span>
           <h5>Cartoon áo thun</h5>
@@ -41,7 +41,7 @@
       </div>
 
       <div :class="$style.pro">
-        <img src="@/assets/img/products/f1.jpg" alt="" />
+        <img src="@/assets/img/products/f3.jpg" alt="" />
         <div :class="$style.des">
           <span>Thương hiệu Adidas</span>
           <h5>Cartoon áo thun</h5>
@@ -57,7 +57,7 @@
       </div>
 
       <div :class="$style.pro">
-        <img src="@/assets/img/products/f1.jpg" alt="" />
+        <img src="@/assets/img/products/f4.jpg" alt="" />
         <div :class="$style.des">
           <span>Thương hiệu Adidas</span>
           <h5>Cartoon áo thun</h5>
@@ -73,7 +73,7 @@
       </div>
 
       <div :class="$style.pro">
-        <img src="@/assets/img/products/f1.jpg" alt="" />
+        <img src="@/assets/img/products/f5.jpg" alt="" />
         <div :class="$style.des">
           <span>Thương hiệu Adidas</span>
           <h5>Cartoon áo thun</h5>
@@ -89,7 +89,7 @@
       </div>
 
       <div :class="$style.pro">
-        <img src="@/assets/img/products/f1.jpg" alt="" />
+        <img src="@/assets/img/products/f6.jpg" alt="" />
         <div :class="$style.des">
           <span>Thương hiệu Adidas</span>
           <h5>Cartoon áo thun</h5>
@@ -105,7 +105,7 @@
       </div>
 
       <div :class="$style.pro">
-        <img src="@/assets/img/products/f1.jpg" alt="" />
+        <img src="@/assets/img/products/f7.jpg" alt="" />
         <div :class="$style.des">
           <span>Thương hiệu Adidas</span>
           <h5>Cartoon áo thun</h5>
@@ -121,7 +121,7 @@
       </div>
 
       <div :class="$style.pro">
-        <img src="@/assets/img/products/f1.jpg" alt="" />
+        <img src="@/assets/img/products/f8.jpg" alt="" />
         <div :class="$style.des">
           <span>Thương hiệu Adidas</span>
           <h5>Cartoon áo thun</h5>
