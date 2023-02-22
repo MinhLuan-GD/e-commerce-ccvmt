@@ -15,6 +15,9 @@ export class Product {
   @Prop({ required: true, type: [ProductImageSchema] })
   images: ProductImage[];
 
+  @Prop({ default: 5 })
+  rating: number;
+
   @Prop({ required: true })
   price: number;
 
