@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { CreateProductDto } from './dtos/create-product.dto';
 import { IProductsService } from './products.interface';
 import { ProductsRepository } from './products.repository';
 import { Product } from './schemas/product.schema';
@@ -7,23 +8,23 @@ import { Product } from './schemas/product.schema';
 export class ProductsService implements IProductsService {
   constructor(private readonly productRepo: ProductsRepository) {}
 
-  createProduct(product: any): Product {
+  async createProduct(createProductDto: CreateProductDto): Promise<Product> {
+    return this.productRepo.create(createProductDto);
+  }
+
+  async getProducts(filter: any): Promise<Product[]> {
+    return this.productRepo.find(filter);
+  }
+
+  async getProduct(id: string): Promise<Product> {
+    return this.productRepo.getOne({ _id: id });
+  }
+
+  updateProduct(id: string, dto: any): Promise<Product> {
     throw new Error('Method not implemented.');
   }
 
-  getProducts(): Product[] {
-    throw new Error('Method not implemented.');
-  }
-
-  getProduct(productId: string): Product {
-    throw new Error('Method not implemented.');
-  }
-
-  updateProduct(productId: string, product: any): Product {
-    throw new Error('Method not implemented.');
-  }
-
-  modifyProduct(productId: string, product: Partial<any>): Product {
+  modifyProduct(id: string, dto: Partial<any>): Promise<Product> {
     throw new Error('Method not implemented.');
   }
 }

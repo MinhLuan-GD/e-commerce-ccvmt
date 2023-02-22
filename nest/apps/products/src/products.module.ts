@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Product, ProductSchema } from './schemas/product.schema';
 import { Services } from '@app/common/constants';
 import * as Joi from 'joi';
+import { ProductsRepository } from './products.repository';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import * as Joi from 'joi';
   ],
   controllers: [ProductsController],
   providers: [
+    ProductsRepository,
     {
       provide: Services.PRODUCTS,
       useClass: ProductsService,

@@ -1,9 +1,10 @@
+import { CreateProductDto } from './dtos/create-product.dto';
 import { Product } from './schemas/product.schema';
 
 export interface IProductsService {
-  createProduct(product: any): Product;
-  getProducts(): Product[];
-  getProduct(productId: string): Product;
-  updateProduct(productId: string, product: any): Product;
-  modifyProduct(productId: string, product: Partial<any>): Product;
+  createProduct(dto: CreateProductDto): Promise<Product>;
+  getProducts(filter: any): Promise<Product[]>;
+  getProduct(id: string): Promise<Product>;
+  updateProduct(id: string, dto: any): Promise<Product>;
+  modifyProduct(id: string, dto: Partial<any>): Promise<Product>;
 }

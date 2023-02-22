@@ -32,7 +32,7 @@ export class CreateProductDto {
   @ArrayNotEmpty()
   @ValidateNested({ each: true })
   @Type(() => ImageValidate)
-  images: ImageValidate;
+  images: ImageValidate[];
 
   @IsNumber()
   @IsNotEmpty()
