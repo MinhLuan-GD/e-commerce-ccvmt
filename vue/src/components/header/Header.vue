@@ -10,22 +10,16 @@
       </div>
       <div :class="`${$style.item} ${$style.activate}`">Home</div>
 
-      <!-- <div class="dropdown">
-        
-        <div class="dropdown-content">
-          <p>Áo thun</p>
-          <p>Giày dép</p>s
-          <p>Phụ kiện</p>
+      <a href="/shop">
+        <div :class="`${$style.item} ${$style.dropdown}`">
+          Shop
+          <div :class="$style.content">
+            <p>Áo thun</p>
+            <p>Giày dép</p>
+            <p>Phụ kiện</p>
+          </div>
         </div>
-      </div> -->
-      <div :class="`${$style.item} ${$style.dropdown}`">
-        Shop
-        <div :class="$style.content">
-          <p>Áo thun</p>
-          <p>Giày dép</p>
-          <p>Phụ kiện</p>
-        </div>
-      </div>
+      </a>
       <div :class="$style.item">Contact</div>
       <div :class="$style.item">
         <img src="@/assets/img/bag.png" alt="bag" />

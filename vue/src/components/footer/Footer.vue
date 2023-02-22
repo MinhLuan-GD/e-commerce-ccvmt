@@ -1,4 +1,17 @@
 <template>
+  <div :class="$style.newsletter">
+    <div>
+      <h4>Đăng ký bằng bản tin</h4>
+      <p>
+        Gửi E-mail cập nhật thông tin mới về shop và
+        <span>những ưu đãi đặc biệt.</span>
+      </p>
+    </div>
+    <div :class="$style.newsForm">
+      <input type="text" placeholder="Email của bạn" />
+      <button :class="$style.normal">Đăng ký</button>
+    </div>
+  </div>
   <div :class="$style.container">
     <div :class="$style.col">
       <img :class="$style.logo" src="@/assets/img/logo1.png" alt="" />
@@ -55,6 +68,64 @@ export default class Footer extends Vue {}
 </script>
 
 <style lang="scss" module>
+.newsletter {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  background-image: url(@/assets/img/banner/b14.png);
+  background-repeat: no-repeat;
+  background-position: 20% 30%;
+  background-color: #041e42;
+  margin: 40px 0;
+  padding: 40px 80px;
+
+  & h4 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+  }
+  & p {
+    font-size: 22px;
+    font-weight: 700;
+    color: #818ea0;
+    margin-top: revert;
+  }
+  & p span {
+    color: #ffbd27;
+  }
+}
+.newsForm {
+  display: flex;
+  width: 40%;
+
+  & input {
+    height: 3.125rem;
+    padding: 0 1.25em;
+    font-size: 14px;
+    width: 100%;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    outline: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  & button {
+    background-color: #088178;
+    color: #fff;
+    white-space: nowrap;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 15px 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: 0.2s;
+  }
+}
 .container {
   display: flex;
   flex-wrap: wrap;

@@ -1,7 +1,9 @@
 <template>
   <div :class="$style.container">
-    <h2>Sản phẩm mới</h2>
-    <p>Những sản phẩm mới của nhà thiết kế</p>
+    <h2>Giao dịch siêu giá trị tại MST</h2>
+    <p>MST <span> giảm giá </span>giảm tận sản phẩm tới <span>70%!</span></p>
+  </div>
+  <div :class="$style.container2">
     <div
       :class="$style.procontaniner"
       onclick="window.location.href='sproduct.html';"
@@ -138,36 +140,13 @@
       <!-- New Product -->
     </div>
   </div>
+  <div :class="$style.setion">
+    <div :class="$style.pagination">
+      <a href="#" :class="$style.spacer">1</a>
+      <a href="#" :class="$style.spacer">2</a>
 
-  <div :class="$style.section">
-    <div :class="$style.advertis"></div>
-  </div>
-
-  <div :class="$style.section1">
-    <div :class="$style.feature">
-      <div :class="$style.ferbox">
-        <img src="@/assets/img/features/f1.png" alt="" />
-        <h6>Giao hàng miễn phí</h6>
-      </div>
-      <div :class="$style.ferbox">
-        <img src="@/assets/img/features/f2.png" alt="" />
-        <h6 :class="$style.child2">Mua hàng trực tuyến</h6>
-      </div>
-      <div :class="$style.ferbox">
-        <img src="@/assets/img/features/f3.png" alt="" />
-        <h6 :class="$style.child3">Tiết kiệm</h6>
-      </div>
-      <div :class="$style.ferbox">
-        <img src="@/assets/img/features/f4.png" alt="" />
-        <h6 :class="$style.child4">Khuyến mãi</h6>
-      </div>
-      <div :class="$style.ferbox">
-        <img src="@/assets/img/features/f5.png" alt="" />
-        <h6 :class="$style.child5">Trao đổi mua bán</h6>
-      </div>
-      <div :class="$style.ferbox">
-        <img src="@/assets/img/features/f6.png" alt="" />
-        <h6 :class="$style.child6">Hỗ trợ 24/7</h6>
+      <div :class="`${$style['search-icon']} ${$style.spacer}`">
+        <img src="@/assets/img/arrow.png" alt="" />
       </div>
     </div>
   </div>
@@ -176,24 +155,38 @@
 <script lang="ts">
 import { Vue } from "vue-class-component";
 
-export default class NewProduct extends Vue {}
+export default class Conten extends Vue {}
 </script>
 
 <style lang="scss" module>
 .container {
-  padding: 40px 80px;
+  background-image: url("@/assets/img/banner/b1.jpg");
+  width: 100%;
+  height: 40vh;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
   text-align: center;
-
+  flex-direction: column;
+  padding: 14px;
   & h2 {
     font-size: 46px;
     line-height: 54px;
-    color: #222;
+    color: #fff;
   }
   & p {
-    font-size: 26px;
-    color: #465b52;
-    margin: 15px 0 20px 0;
+    font-size: 46px;
+    line-height: 54px;
+    color: #fff;
   }
+  & span {
+    color: #ef3636;
+  }
+}
+.container2 {
+  padding: 40px 80px;
+  text-align: center;
+
   & .procontaniner {
     display: flex;
     justify-content: space-between;
@@ -279,128 +272,39 @@ export default class NewProduct extends Vue {}
     }
   }
 }
-.section {
-  margin: 40px 0;
-  & .advertis {
+.setion {
+  padding: 40px 80px;
+  margin: 10px;
+
+  .pagination {
+    text-align: center;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    background-image: url(@/assets/img/banner/b1.jpg);
-    width: 100%;
-    height: 40vh;
-    background-size: cover;
-    background-position: center;
-  }
-}
 
-.section1 {
-  padding: 40px 80px;
-  & .feature {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    & .spacer {
+      margin-left: 2px;
+      margin-right: 2px;
+    }
 
-    & .ferbox {
-      width: 180px;
-      text-align: center;
-      padding: 25px 15px;
-      box-shadow: 20px 20px 34px rgba(0, 0, 0, 0.03);
-      border: 1px solid #cce7d0;
+    & a {
+      text-decoration: none;
+      background-color: #088178;
+      padding: 15px 20px;
       border-radius: 4px;
-      margin: 15px 0;
-      & img {
-        width: 100%;
-        margin-bottom: 10px;
-      }
-      & h6 {
-        display: inline-block;
-        padding: 9px 8px 6px 8px;
-        line-height: 1;
-        border-radius: 4px;
-        color: #088178;
-        background-color: #fddde4;
-      }
-      & .child2 {
-        background-color: #cdebbc;
-      }
-      & .child3 {
-        background-color: #d1e8f2;
-      }
-      & .child4 {
-        background-color: #cdd4f8;
-      }
-      & .child5 {
-        background-color: #f6dbf6;
-      }
-      & .child6 {
-        background-color: #fff2e5;
-      }
+      color: #fff;
+      font-weight: 600;
     }
 
-    & :hover {
-      box-shadow: 10px 10px 54px rgba(70, 62, 221, 0.1);
+    .search-icon {
+      padding: 12px 15px;
+      background-color: #088178;
+      border-radius: 5px;
+      & img {
+        font-size: 16px;
+        height: 20px;
+      }
     }
   }
 }
-// .newsletter {
-//   display: flex;
-//   justify-content: space-between;
-//   flex-wrap: wrap;
-//   align-items: center;
-//   background-image: url(@/assets/img/banner/b14.png);
-//   background-repeat: no-repeat;
-//   background-position: 20% 30%;
-//   background-color: #041e42;
-//   margin: 40px 0;
-//   padding: 40px 80px;
-
-//   & h4 {
-//     font-size: 22px;
-//     font-weight: 700;
-//     color: #fff;
-//   }
-//   & p {
-//     font-size: 22px;
-//     font-weight: 700;
-//     color: #818ea0;
-//     margin-top: revert;
-//   }
-//   & p span {
-//     color: #ffbd27;
-//   }
-// }
-// .newsForm {
-//   display: flex;
-//   width: 40%;
-
-//   & input {
-//     height: 3.125rem;
-//     padding: 0 1.25em;
-//     font-size: 14px;
-//     width: 100%;
-//     border: 1px solid transparent;
-//     border-radius: 4px;
-//     outline: none;
-//     border-top-right-radius: 0;
-//     border-bottom-right-radius: 0;
-//   }
-//   & button {
-//     background-color: #088178;
-//     color: #fff;
-//     white-space: nowrap;
-//     border-top-left-radius: 0;
-//     border-bottom-left-radius: 0;
-//     font-size: 14px;
-//     font-weight: 600;
-//     padding: 15px 30px;
-//     border-radius: 4px;
-//     cursor: pointer;
-//     border: none;
-//     outline: none;
-//     transition: 0.2s;
-//   }
-// }
 </style>
