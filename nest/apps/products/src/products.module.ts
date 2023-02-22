@@ -5,6 +5,7 @@ import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Product, ProductSchema } from './schemas/product.schema';
+import { Services } from '@app/common/constants';
 import * as Joi from 'joi';
 
 @Module({
@@ -24,6 +25,17 @@ import * as Joi from 'joi';
     RmqModule,
   ],
   controllers: [ProductsController],
-  providers: [ProductsService],
+  providers: [
+    {
+      provide: Services.PRODUCTS,
+      useClass: ProductsService,
+    },
+  ],
+  exports: [
+    {
+      provide: Services.PRODUCTS,
+      useClass: ProductsService,
+    },
+  ],
 })
 export class ProductsModule {}
