@@ -1,5 +1,5 @@
 <template>
-  <Header />
+  <Header activity="shop" />
   <Conten />
   <Footer />
 </template>

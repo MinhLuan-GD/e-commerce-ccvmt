@@ -221,7 +221,7 @@ export default class Cart extends Vue {}
     padding: 10px 20px;
     outline: none;
     font-size: 12px;
-    width: 60%;
+    width: 270px;
     margin-right: 10px;
     border: 1px solid #e2e9e1;
   }
@@ -238,6 +238,7 @@ export default class Cart extends Vue {}
     margin-bottom: 30px;
     border: 1px solid #e2e9e1;
     padding: 30px;
+    border-radius: 15px;
 
     & table {
       border-collapse: collapse;

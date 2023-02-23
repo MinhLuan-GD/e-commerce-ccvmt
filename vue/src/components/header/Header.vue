@@ -10,14 +10,22 @@
       </div>
       <div
         @click="(e) => $router.replace('/')"
-        :class="`${$style.item} ${$style.activate}`"
+        :class="
+          activity === 'home'
+            ? `${$style.item} ${$style.activate}`
+            : $style.item
+        "
       >
         Home
       </div>
 
       <div
         @click="(e) => $router.replace('/shop')"
-        :class="`${$style.item} ${$style.dropdown}`"
+        :class="
+          activity === 'shop'
+            ? `${$style.item} ${$style.dropdown} ${$style.activate}`
+            : `${$style.item} ${$style.dropdown}`
+        "
       >
         Shop
         <div :class="$style.content">
@@ -27,7 +35,14 @@
         </div>
       </div>
 
-      <div @click="(e) => $router.replace('/contact')" :class="$style.item">
+      <div
+        @click="(e) => $router.replace('/contact')"
+        :class="
+          activity === 'contact'
+            ? `${$style.item} ${$style.activate}`
+            : $style.item
+        "
+      >
         Contact
       </div>
       <div @click="(e) => $router.replace('/cart')" :class="$style.item">
@@ -46,9 +61,16 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { Options, Vue } from "vue-class-component";
 
-export default class Header extends Vue {}
+@Options({
+  props: {
+    activity: String,
+  },
+})
+export default class Header extends Vue {
+  activity!: string;
+}
 </script>
 
 <style lang="scss" module>

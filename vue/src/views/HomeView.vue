@@ -1,5 +1,5 @@
 <template>
-  <Header />
+  <Header activity="home" />
   <Banner />
   <RatingProduct />
   <NewProduct />
