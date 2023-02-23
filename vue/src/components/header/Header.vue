@@ -8,20 +8,29 @@
       <div :class="$style['search-icon']">
         <img src="@/assets/img/icon/search.png" alt="search" />
       </div>
-      <div :class="`${$style.item} ${$style.activate}`">Home</div>
+      <div
+        @click="(e) => $router.replace('/')"
+        :class="`${$style.item} ${$style.activate}`"
+      >
+        Home
+      </div>
 
-      <a href="/shop">
-        <div :class="`${$style.item} ${$style.dropdown}`">
-          Shop
-          <div :class="$style.content">
-            <p>Áo thun</p>
-            <p>Giày dép</p>
-            <p>Phụ kiện</p>
-          </div>
+      <div
+        @click="(e) => $router.replace('/shop')"
+        :class="`${$style.item} ${$style.dropdown}`"
+      >
+        Shop
+        <div :class="$style.content">
+          <p>Áo thun</p>
+          <p>Giày dép</p>
+          <p>Phụ kiện</p>
         </div>
-      </a>
-      <div :class="$style.item">Contact</div>
-      <div :class="$style.item">
+      </div>
+
+      <div @click="(e) => $router.replace('/contact')" :class="$style.item">
+        Contact
+      </div>
+      <div @click="(e) => $router.replace('/cart')" :class="$style.item">
         <img src="@/assets/img/bag.png" alt="bag" />
       </div>
       <div :class="$style.item">
