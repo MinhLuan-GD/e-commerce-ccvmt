@@ -136,6 +136,20 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: password123
       ME_CONFIG_MONGODB_URL: mongodb://root:password123@mongo-primary:27017/
 
+  reverse-proxy:
+    container_name: mecn_reverse_proxy
+    image: nginx:1.21.3-alpine
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - api-products
+      - api-users
+      - api-auth
+      - api-orders
+      - api-categories
+
 volumes:
   mongodb_master_data:
     driver: local
