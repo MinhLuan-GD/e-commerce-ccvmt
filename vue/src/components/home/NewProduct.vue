@@ -4,7 +4,7 @@
     <p>Những sản phẩm mới của nhà thiết kế</p>
     <div
       :class="$style.procontaniner"
-      onclick="window.location.href='sproduct.html';"
+      onclick="window.location.href='Detail'';"
     >
       <!-- New Product -->
       <div :class="$style.pro">
