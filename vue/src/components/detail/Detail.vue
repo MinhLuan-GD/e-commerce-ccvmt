@@ -71,6 +71,10 @@
       >
     </div>
   </div>
+  <div :class="$style.title">
+    <h2>Những sản phẩm gợi ý</h2>
+    <p>Những sản phẩm mới 2023</p>
+  </div>
 </template>
 
 <script lang="ts">
@@ -84,6 +88,7 @@ export default class Detail extends Vue {}
   display: flex;
   margin-top: 20px;
   padding: 40px 80px;
+
   & .singlepropimage {
     width: 40%;
     margin-right: 50px;
@@ -165,6 +170,22 @@ export default class Detail extends Vue {}
 
   & .singleprodetails span {
     line-height: 25px;
+  }
+}
+
+.title {
+  padding: 40px 80px;
+  text-align: center;
+
+  & h2 {
+    font-size: 46px;
+    line-height: 54px;
+    color: #222;
+  }
+  & p {
+    font-size: 26px;
+    color: #465b52;
+    margin: 15px 0 20px 0;
   }
 }
 </style>

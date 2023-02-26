@@ -2,10 +2,7 @@
   <div :class="$style.container">
     <h2>Sản phẩm mới</h2>
     <p>Những sản phẩm mới của nhà thiết kế</p>
-    <div
-      :class="$style.procontaniner"
-      onclick="window.location.href='Detail'';"
-    >
+    <div :class="$style.procontaniner" onclick="window.location.href='detail';">
       <!-- New Product -->
       <div :class="$style.pro">
         <img src="@/assets/img/products/n2.jpg" alt="" />

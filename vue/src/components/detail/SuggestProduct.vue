@@ -1,8 +1,6 @@
 <template>
   <div :class="$style.container">
-    <h2>Những sản phẩm gợi ý</h2>
-    <p>Những sản phẩm mới 2023</p>
-    <div :class="$style.procontaniner" onclick="window.location.href='Detail';">
+    <div :class="$style.procontaniner" onclick="window.location.href='detail';">
       <!-- List product -->
 
       <div :class="$style.pro">
@@ -146,7 +144,7 @@ export default class SuggestProduct extends Vue {}
 
 <style lang="scss" module>
 .container {
-  padding: 40px 80px;
+  padding: 10px 80px;
   text-align: center;
 
   & h2 {

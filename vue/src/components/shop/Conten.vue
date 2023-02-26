@@ -4,10 +4,7 @@
     <p>MST <span> giảm giá </span>giảm tận sản phẩm tới <span>70%!</span></p>
   </div>
   <div :class="$style.container2">
-    <div
-      :class="$style.procontaniner"
-      onclick="window.location.href='sproduct.html';"
-    >
+    <div :class="$style.procontaniner" onclick="window.location.href='detail';">
       <div :class="$style.pro">
         <img src="@/assets/img/products/n2.jpg" alt="" />
         <div :class="$style.des">

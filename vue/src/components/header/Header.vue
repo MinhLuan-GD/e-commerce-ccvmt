@@ -5,7 +5,10 @@
     </div>
     <div :class="$style.navbar">
       <input type="text" placeholder=" Nhập sản phẩm cần tìm" />
-      <div :class="$style['search-icon']">
+      <div
+        @click="(e) => $router.replace('/search')"
+        :class="$style['search-icon']"
+      >
         <img src="@/assets/img/icon/search.png" alt="search" />
       </div>
       <div
