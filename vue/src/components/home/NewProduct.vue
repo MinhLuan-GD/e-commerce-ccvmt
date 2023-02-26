@@ -205,7 +205,7 @@ export default class NewProduct extends Vue {}
     min-width: n250px;
     padding: 10px 12px;
     border: 1px solid #cce7d0;
-    border-radius: 2px;
+    border-radius: 10px;
     box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.02);
     margin: 15px 0;
     transition: 0.5s ease;

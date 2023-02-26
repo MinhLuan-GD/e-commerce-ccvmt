@@ -8,7 +8,6 @@
       :class="$style.procontaniner"
       onclick="window.location.href='sproduct.html';"
     >
-      <!-- New Product -->
       <div :class="$style.pro">
         <img src="@/assets/img/products/n2.jpg" alt="" />
         <div :class="$style.des">

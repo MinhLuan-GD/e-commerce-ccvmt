@@ -48,7 +48,7 @@
       <div @click="(e) => $router.replace('/cart')" :class="$style.item">
         <img src="@/assets/img/bag.png" alt="bag" />
       </div>
-      <div :class="$style.item">
+      <div @click="(e) => $router.replace('/login')" :class="$style.item">
         <img
           src="@/assets/img/user.png"
           width="25px"

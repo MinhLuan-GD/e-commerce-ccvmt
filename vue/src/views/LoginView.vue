@@ -1,25 +1,22 @@
 <template>
-  <Header activity="shop" />
-
-  <Conten />
-
+  <Header />
+  <Login />
   <Footer />
 </template>
 
 <script lang="ts">
 import Header from "@/components/header/Header.vue";
-import Conten from "@/components/shop/Conten.vue";
-
+import Login from "@/components/login/Login.vue";
 import Footer from "@/components/footer/Footer.vue";
 
 import { Options, Vue } from "vue-class-component";
 
 @Options({
   components: {
-    Conten,
+    Login,
     Header,
     Footer,
   },
 })
-export default class ShopView extends Vue {}
+export default class LoginView extends Vue {}
 </script>
