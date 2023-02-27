@@ -12,6 +12,7 @@
     "formulahendry.auto-rename-tag",
     "ashinzekene.nestjs",
     "wix.vscode-import-cost",
-    "sdras.vue-vscode-snippets"
+    "sdras.vue-vscode-snippets",
+    "william-voyek.vscode-nginx"
   ]
 }

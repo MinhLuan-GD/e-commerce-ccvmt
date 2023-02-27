@@ -6,8 +6,8 @@ import { ProductsService } from './products.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Product, ProductSchema } from './schemas/product.schema';
 import { Services } from '@app/common/constants';
-import * as Joi from 'joi';
 import { ProductsRepository } from './products.repository';
+import * as Joi from 'joi';
 
 @Module({
   imports: [

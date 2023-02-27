@@ -11,7 +11,7 @@ import {
 import { CreateProductDto } from './dtos/create-product.dto';
 import { IProductsService } from './products.interface';
 
-@Controller({ path: Routes.PRODUCTS })
+@Controller(Routes.PRODUCTS)
 export class ProductsController {
   constructor(
     @Inject(Services.PRODUCTS)
