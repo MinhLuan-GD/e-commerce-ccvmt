@@ -1,17 +1,27 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
-  </div>
+  <Header activity="home" />
+  <Banner />
+  <RatingProduct />
+  <NewProduct />
+  <Footer />
 </template>
 
 <script lang="ts">
+import Footer from "@/components/footer/Footer.vue";
+import Banner from "@/components/home/Banner.vue";
+import RatingProduct from "@/components/home/RatingProduct.vue";
+import NewProduct from "@/components/home/NewProduct.vue";
+import Header from "@/components/header/Header.vue";
+
 import { Options, Vue } from "vue-class-component";
-import HelloWorld from "@/components/HelloWorld.vue";
 
 @Options({
   components: {
-    HelloWorld,
+    Header,
+    Banner,
+    RatingProduct,
+    NewProduct,
+    Footer,
   },
 })
 export default class HomeView extends Vue {}
