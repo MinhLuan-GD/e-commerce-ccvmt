@@ -14,6 +14,8 @@ import NewProduct from "@/components/home/NewProduct.vue";
 import Header from "@/components/header/Header.vue";
 
 import { Options, Vue } from "vue-class-component";
+import store from "@/store";
+import { getProducts } from "@/api/products";
 
 @Options({
   components: {
@@ -24,5 +26,13 @@ import { Options, Vue } from "vue-class-component";
     Footer,
   },
 })
-export default class HomeView extends Vue {}
+export default class HomeView extends Vue {
+  created(): void {
+    // store.dispatch("getProducts");
+
+    getProducts().then(({ data }) => {
+      console.log(data);
+    });
+  }
+}
 </script>

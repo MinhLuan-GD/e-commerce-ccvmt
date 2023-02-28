@@ -1,3 +1,4 @@
+import { Routes } from "@/utils/constants";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -5,37 +6,38 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "home",
     component: () => import("../views/HomeView.vue"),
+    alias: Routes.HOME,
   },
   {
-    path: "/shop",
+    path: Routes.SHOP,
     name: "shop",
     component: () => import("../views/ShopView.vue"),
   },
   {
-    path: "/contact",
+    path: Routes.CONTACT,
     name: "contact",
     component: () => import("../views/ContactView.vue"),
   },
   {
-    path: "/cart",
+    path: Routes.CART,
     name: "cart",
     component: () => import("../views/CartView.vue"),
   },
   {
-    path: "/detail",
+    path: Routes.DETAIL,
     name: "detail",
     component: () => import("../views/DetailView.vue"),
   },
   {
-    path: "/login",
+    path: Routes.LOGIN,
     name: "login",
     component: () => import("../views/LoginView.vue"),
   },
   {
-    path: "/search",
+    path: Routes.SEARCH,
     name: "search",
     component: () => import("../views/SearchView.vue"),
-  }
+  },
 ];
 
 const router = createRouter({

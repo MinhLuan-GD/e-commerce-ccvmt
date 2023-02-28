@@ -11,11 +11,13 @@ import * as Joi from 'joi';
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
+        PORT: Joi.string().required(),
         JWT_SECRET: Joi.string().required(),
         JWT_EXPIRATION: Joi.string().required(),
         GOOGLE_CLIENT_ID: Joi.string().required(),
         GOOGLE_SECRET: Joi.string().required(),
         RABBIT_MQ_URI: Joi.string().required(),
+        ORIGIN: Joi.string().required(),
       }),
     }),
     JwtModule.registerAsync({

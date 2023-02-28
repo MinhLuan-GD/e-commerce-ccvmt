@@ -12,11 +12,13 @@ import * as Joi from 'joi';
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: Joi.object({
+        PORT: Joi.string().required(),
         MONGO_HOST: Joi.string().required(),
         MONGO_DB: Joi.string().required(),
         MONGO_USER: Joi.string().required(),
         MONGO_PASS: Joi.string().required(),
         RABBIT_MQ_URI: Joi.string().required(),
+        ORIGIN: Joi.string().required(),
       }),
     }),
     DatabaseModule,

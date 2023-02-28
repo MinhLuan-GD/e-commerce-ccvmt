@@ -8,9 +8,9 @@ async function bootstrap() {
   const rmqService = app.get(RmqService);
   app.connectMicroservice(rmqService.getOptions('products', true));
   app.enableVersioning();
-  app.enableCors({ origin: '*', credentials: true });
+  app.enableCors({ origin: process.env.ORIGIN.split(' '), credentials: true });
   app.useGlobalPipes(new ValidationPipe());
   await app.startAllMicroservices();
-  await app.listen(3000);
+  await app.listen(process.env.PORT);
 }
 bootstrap();
