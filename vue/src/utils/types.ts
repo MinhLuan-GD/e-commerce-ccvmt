@@ -16,4 +16,8 @@ interface Product {
   updatedAt: string;
 }
 
-export { Product };
+interface State {
+  products: Product[];
+}
+
+export { ProductImage, Product, State };

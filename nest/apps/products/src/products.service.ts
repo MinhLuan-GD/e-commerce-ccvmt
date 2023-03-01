@@ -16,6 +16,10 @@ export class ProductsService implements IProductsService {
     return this.productRepo.find(filter);
   }
 
+  async getNewProducts(): Promise<Product[]> {
+    return this.productRepo.find({}, '', 8, { createdAt: -1 });
+  }
+
   async getProduct(id: string): Promise<Product> {
     return this.productRepo.getOne({ _id: id });
   }

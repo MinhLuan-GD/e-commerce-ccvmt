@@ -28,6 +28,11 @@ export class ProductsController {
     return this.productsService.getProducts(query);
   }
 
+  @Get('new-products')
+  getNewProducts() {
+    return this.productsService.getNewProducts();
+  }
+
   @Get(':id')
   getProduct(@Param('id') id: string) {
     return this.productsService.getProduct(id);

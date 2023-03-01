@@ -4,134 +4,21 @@
     <p>Những sản phẩm mới của nhà thiết kế</p>
     <div :class="$style.procontaniner" onclick="window.location.href='detail';">
       <!-- New Product -->
-      <div :class="$style.pro">
-        <img src="@/assets/img/products/n2.jpg" alt="" />
+      <div v-for="product in products" :class="$style.pro" :key="product._id">
+        <img :src="productImage(product)" alt="product-image" />
         <div :class="$style.des">
           <span>Thương hiệu Adidas</span>
-          <h5>Cartoon áo thun</h5>
+          <h5>{{ product.title }}</h5>
           <div :class="$style.rating">
             <span>☆</span><span>☆</span><span>☆</span><span>☆</span
             ><span>☆</span>
           </div>
-          <h4>$78</h4>
+          <h4>${{ product.price }}</h4>
         </div>
         <div :class="$style.cart">
           <img src="@/assets/img/cart.png" alt="" />
         </div>
       </div>
-
-      <div :class="$style.pro">
-        <img src="@/assets/img/products/f3.jpg" alt="" />
-        <div :class="$style.des">
-          <span>Thương hiệu Adidas</span>
-          <h5>Cartoon áo thun</h5>
-          <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
-          </div>
-          <h4>$78</h4>
-        </div>
-        <div :class="$style.cart">
-          <img src="@/assets/img/cart.png" alt="" />
-        </div>
-      </div>
-
-      <div :class="$style.pro">
-        <img src="@/assets/img/products/n2.jpg" alt="" />
-        <div :class="$style.des">
-          <span>Thương hiệu Adidas</span>
-          <h5>Cartoon áo thun</h5>
-          <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
-          </div>
-          <h4>$78</h4>
-        </div>
-        <div :class="$style.cart">
-          <img src="@/assets/img/cart.png" alt="" />
-        </div>
-      </div>
-
-      <div :class="$style.pro">
-        <img src="@/assets/img/products/n3.jpg" alt="" />
-        <div :class="$style.des">
-          <span>Thương hiệu Adidas</span>
-          <h5>Cartoon áo thun</h5>
-          <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
-          </div>
-          <h4>$78</h4>
-        </div>
-        <div :class="$style.cart">
-          <img src="@/assets/img/cart.png" alt="" />
-        </div>
-      </div>
-
-      <div :class="$style.pro">
-        <img src="@/assets/img/products/n4.jpg" alt="" />
-        <div :class="$style.des">
-          <span>Thương hiệu Adidas</span>
-          <h5>Cartoon áo thun</h5>
-          <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
-          </div>
-          <h4>$78</h4>
-        </div>
-        <div :class="$style.cart">
-          <img src="@/assets/img/cart.png" alt="" />
-        </div>
-      </div>
-
-      <div :class="$style.pro">
-        <img src="@/assets/img/products/n5.jpg" alt="" />
-        <div :class="$style.des">
-          <span>Thương hiệu Adidas</span>
-          <h5>Cartoon áo thun</h5>
-          <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
-          </div>
-          <h4>$78</h4>
-        </div>
-        <div :class="$style.cart">
-          <img src="@/assets/img/cart.png" alt="" />
-        </div>
-      </div>
-
-      <div :class="$style.pro">
-        <img src="@/assets/img/products/n6.jpg" alt="" />
-        <div :class="$style.des">
-          <span>Thương hiệu Adidas</span>
-          <h5>Cartoon áo thun</h5>
-          <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
-          </div>
-          <h4>$78</h4>
-        </div>
-        <div :class="$style.cart">
-          <img src="@/assets/img/cart.png" alt="" />
-        </div>
-      </div>
-
-      <div :class="$style.pro">
-        <img src="@/assets/img/products/n7.jpg" alt="" />
-        <div :class="$style.des">
-          <span>Thương hiệu Adidas</span>
-          <h5>Cartoon áo thun</h5>
-          <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
-          </div>
-          <h4>$78</h4>
-        </div>
-        <div :class="$style.cart">
-          <img src="@/assets/img/cart.png" alt="" />
-        </div>
-      </div>
-
       <!-- New Product -->
     </div>
   </div>
@@ -171,9 +58,28 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { Product, ProductImage } from "@/utils/types";
+import { Options, Vue } from "vue-class-component";
 
-export default class NewProduct extends Vue {}
+@Options({
+  props: {
+    products: { type: Object },
+  },
+})
+export default class NewProduct extends Vue {
+  products!: Product[];
+
+  productImage(product: Product): string {
+    const img = product.images.find((img) => img.isMain) as ProductImage;
+    return `http://localhost:8888/unsafe/300x300/products/images/${img.imageUrl}`;
+  }
+
+  mounted(): void {
+    setTimeout(() => {
+      console.log(this.products);
+    }, 5000);
+  }
+}
 </script>
 
 <style lang="scss" module>

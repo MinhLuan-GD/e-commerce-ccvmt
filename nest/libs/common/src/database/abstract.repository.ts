@@ -68,8 +68,18 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
       .lean();
   }
 
-  async find(filterQuery: FilterQuery<TDocument>, select?: string) {
-    return this.model.find(filterQuery).select(select).lean();
+  async find(
+    filterQuery: FilterQuery<TDocument>,
+    select?: string,
+    limit = 0,
+    sort?: any,
+  ) {
+    return this.model
+      .find(filterQuery)
+      .select(select)
+      .limit(limit)
+      .sort(sort)
+      .lean();
   }
 
   async sort(sortBy: any) {
