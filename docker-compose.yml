@@ -156,7 +156,6 @@ services:
   thumbor:
     container_name: mecn_thumbor
     image: minimalcompact/thumbor:latest
-    restart: always
     environment:
       THUMBOR_NUM_PROCESSES: 8
       LOADER: thumbor.loaders.file_loader
