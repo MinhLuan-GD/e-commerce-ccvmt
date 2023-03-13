@@ -30,6 +30,7 @@ import * as Joi from 'joi';
       inject: [ConfigService],
     }),
     RmqModule,
+    RmqModule.register({ name: 'users' }),
   ],
   controllers: [AuthController],
   providers: [AuthService],

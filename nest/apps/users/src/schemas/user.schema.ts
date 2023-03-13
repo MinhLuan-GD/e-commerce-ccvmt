@@ -6,7 +6,7 @@ import { Types } from 'mongoose';
   versionKey: false,
   timestamps: true,
   toJSON: {
-    transform: (doc, ret) => {
+    transform: (_doc, ret) => {
       delete ret.password;
       return ret;
     },
@@ -22,7 +22,7 @@ export class User {
   phone?: string;
 
   @Prop()
-  password?: string;
+  password: string;
 
   @Prop({ required: true, default: false })
   isAdmin: boolean;

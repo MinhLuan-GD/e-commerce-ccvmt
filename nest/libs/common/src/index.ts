@@ -5,3 +5,4 @@ export * from './rmq/rmq.module';
 export * from './auth/jwt-auth.guard';
 export * from './auth/admin.decorator';
 export * from './auth/auth.module';
+export * from './types/users';

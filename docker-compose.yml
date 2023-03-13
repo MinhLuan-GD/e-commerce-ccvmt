@@ -54,7 +54,7 @@ services:
       - ./env/cors.env
     environment:
       PORT: 3000
-      JWT_EXPIRATION: 7d
+      JWT_EXPIRATION: 604800 # 7 days
       JWT_SECRET: secret123
       GOOGLE_CLIENT_ID: 
       GOOGLE_SECRET: 
