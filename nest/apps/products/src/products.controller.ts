@@ -33,6 +33,11 @@ export class ProductsController {
     return this.productsService.getNewProducts();
   }
 
+  @Get('top-products')
+  getTopProducts() {
+    return this.productsService.getTopProducts();
+  }
+
   @Get(':id')
   getProduct(@Param('id') id: string) {
     return this.productsService.getProduct(id);

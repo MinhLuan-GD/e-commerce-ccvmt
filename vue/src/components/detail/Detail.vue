@@ -1,50 +1,23 @@
 <template>
   <div :class="$style.container">
     <div :class="$style.singlepropimage">
-      <img src="@/assets/img/products/f2.jpg" id="MainImg" alt="" />
+      <img :src="getMainImageUrl(product.images)" id="MainImg" alt="" />
 
       <div :class="$style.smallimggroup">
-        <div :class="$style.smallimgcol">
-          <img
-            src="@/assets/img/products/f1.jpg"
-            :class="$style.smallimg"
-            alt=""
-          />
-        </div>
-
-        <div :class="$style.smallimgcol">
-          <img
-            src="@/assets/img/products/f2.jpg"
-            :class="$style.smallimg"
-            alt=""
-          />
-        </div>
-
-        <div :class="$style.smallimgcol">
-          <img
-            src="@/assets/img/products/f3.jpg"
-            :class="$style.smallimg"
-            alt=""
-          />
-        </div>
-
-        <div :class="$style.smallimgcol">
-          <img
-            src="@/assets/img/products/f4.jpg"
-            :class="$style.smallimg"
-            alt=""
-          />
+        <div
+          v-for="img in getSmallImageUrl(product.images)"
+          :class="$style.smallimgcol"
+          :key="img.url"
+          @click="() => changeMainImage(img.url)"
+        >
+          <img :src="img.cdn" :class="$style.smallimg" alt="" />
         </div>
       </div>
     </div>
 
     <div :class="$style.singleprodetails">
-      <div onclick="window.location.href='shop.html';">
-        <h6>Trở về trang chủ</h6>
-      </div>
-
-      <h4>Áo thời trang nam mùa hè</h4>
-      <h2>139.000</h2>
+      <h4>{{ product.title }}</h4>
+      <h2>{{ product.price }}</h2>
       <select>
         <option>Chọn Size</option>
         <option>Xl</option>
@@ -52,23 +25,10 @@
         <option>M</option>
         <option>S</option>
       </select>
-
       <input type="number" value="1" />
       <button :class="$style.normal">Thêm vào giỏ hàng</button>
       <h4>Mô tả sản phẩm</h4>
-      <span
-        >Thương hiệu thời trang dành riêng cho phụ nữ Việt Nam có thiết kế đa
-        dạng, trẻ trung, giá thành hợp lý Từng sản phẩm của Sunfly đều được thổi
-        hồn nét quyến rũ, tươi trẻ, tự tin, tràn đầy sức sống trên nền chất liệu
-        vải rất đa dạng từ vải dệt kim Cotton + Spandex đến các chất liệu hot
-        trend. Quy trình khép kín từ thiết kế – sản xuất – phân phối, được đầu
-        tư một cách chuyên nghiệp và bài bản. Đạt tiêu chuẩn theo qui trình quản
-        lý chất lượng theo tiêu chuẩn ISO. Đội ngũ nhân sự tại công ty luôn được
-        tuyển chọn kỹ lưỡng đầu vào, có năng lực cao, tâm huyết, luôn nghiên
-        cứu. Ttìm tòi các giải pháp, công nghệ mới để ứng dụng cải tiến sản
-        phẩm. Vượt mọi thách thức để vươn tới những đỉnh cao, chân trời
-        mới.</span
-      >
+      <pre>{{ description }}</pre>
     </div>
   </div>
   <div :class="$style.title">
@@ -78,9 +38,69 @@
 </template>
 
 <script lang="ts">
+import { getProduct } from "@/api/products";
+import { Product, ProductImage } from "@/utils/types";
 import { Vue } from "vue-class-component";
 
-export default class Detail extends Vue {}
+export default class Detail extends Vue {
+  product: Product = {
+    _id: "",
+    title: "",
+    price: 0,
+    description: "",
+    countInStock: 0,
+    rating: 0,
+    images: [],
+    category: "",
+    createdAt: "",
+    updatedAt: "",
+  };
+  description: string | Document = "";
+
+  created() {
+    const id = this.$route.query.id as string;
+    if (id) {
+      getProduct(id).then(({ data }) => {
+        this.product = data;
+        this.description = new DOMParser().parseFromString(
+          data.description,
+          "text/html"
+        ).body.textContent as string;
+      });
+    }
+  }
+
+  getMainImageUrl(images: ProductImage[]): string {
+    if (!images.length) return "";
+    return `${process.env.VUE_APP_THUMBOR_URL}500x500/products/images/${
+      images.filter((i) => i.isMain)[0].imageUrl
+    }`;
+  }
+
+  getSmallImageUrl(images: ProductImage[]): { cdn: string; url: string }[] {
+    if (!images.length) return [];
+    const result: { cdn: string; url: string }[] = [];
+    images.forEach((i) => {
+      if (!i.isMain) {
+        result.push({
+          cdn: `${process.env.VUE_APP_THUMBOR_URL}100x100/products/images/${i.imageUrl}`,
+          url: i.imageUrl,
+        });
+      }
+    });
+    return result;
+  }
+
+  changeMainImage(img: string) {
+    for (let i = 0; i < this.product.images.length; i++) {
+      if (this.product.images[i].imageUrl == img) {
+        this.product.images[i].isMain = true;
+      } else {
+        this.product.images[i].isMain = false;
+      }
+    }
+  }
+}
 </script>
 
 <style lang="scss" module>
@@ -98,11 +118,16 @@ export default class Detail extends Vue {}
 
     & .smallimggroup {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
 
       & .smallimgcol {
         flex-basis: 24%;
+        margin-right: 5px;
         cursor: pointer;
+      }
+
+      & .smallimgcol:last-child {
+        margin-right: 0;
       }
     }
   }
@@ -112,6 +137,12 @@ export default class Detail extends Vue {}
     display: block;
     padding: 5px 10px;
     margin-bottom: 10px;
+    & pre {
+      font-family: inherit;
+      white-space: pre-wrap;
+      font-size: 16px;
+      color: #000;
+    }
     & h6 {
       font-weight: 700;
       font-size: 12px;

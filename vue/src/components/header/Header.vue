@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.container">
-    <div :class="$style.logo">
+    <div :class="$style.logo" onclick="window.location.href = '/';">
       <img src="@/assets/img/logo1.png" alt="logo" />
     </div>
     <div :class="$style.navbar">
@@ -89,6 +89,7 @@ export default class Header extends Vue {
   top: 0;
   left: 0;
   & .logo {
+    cursor: pointer;
     & img {
       width: 170px;
       height: 70px;

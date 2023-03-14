@@ -2,24 +2,30 @@
   <div :class="$style.container">
     <h2>Sản phẩm mới</h2>
     <p>Những sản phẩm mới của nhà thiết kế</p>
-    <div :class="$style.procontaniner" onclick="window.location.href='detail';">
-      <!-- New Product -->
-      <div v-for="product in products" :class="$style.pro" :key="product._id">
+    <div :class="$style.procontaniner">
+      <div
+        v-for="product in products"
+        :class="$style.pro"
+        :key="product._id"
+        :onclick="`window.location.href='detail?id=${product._id}';`"
+      >
         <img :src="productImage(product)" alt="product-image" />
         <div :class="$style.des">
           <span>Thương hiệu Adidas</span>
           <h5>{{ product.title }}</h5>
           <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
+            <span :class="product.rating == 5 ? $style.active : ''">☆</span
+            ><span :class="product.rating == 4 ? $style.active : ''">☆</span
+            ><span :class="product.rating == 3 ? $style.active : ''">☆</span
+            ><span :class="product.rating == 2 ? $style.active : ''">☆</span
+            ><span :class="product.rating == 1 ? $style.active : ''">☆</span>
           </div>
-          <h4>${{ product.price }}</h4>
+          <h4>{{ product.price }}đ</h4>
         </div>
         <div :class="$style.cart">
           <img src="@/assets/img/cart.png" alt="" />
         </div>
       </div>
-      <!-- New Product -->
     </div>
   </div>
 
@@ -71,13 +77,7 @@ export default class NewProduct extends Vue {
 
   productImage(product: Product): string {
     const img = product.images.find((img) => img.isMain) as ProductImage;
-    return `http://localhost:8888/unsafe/300x300/products/images/${img.imageUrl}`;
-  }
-
-  mounted(): void {
-    setTimeout(() => {
-      console.log(this.products);
-    }, 5000);
+    return `${process.env.VUE_APP_THUMBOR_URL}300x300/products/images/${img.imageUrl}`;
   }
 }
 </script>
@@ -86,7 +86,7 @@ export default class NewProduct extends Vue {
 .container {
   padding: 40px 80px;
   text-align: center;
-
+  user-select: none;
   & h2 {
     font-size: 46px;
     line-height: 54px;
@@ -137,23 +137,23 @@ export default class NewProduct extends Vue {
         unicode-bidi: bidi-override;
         direction: rtl;
         text-align: end;
-      }
-      & .rating > span:hover:before,
-      & .rating > span:hover ~ span:before {
-        content: "\2605";
-        position: absolute;
-        left: 0;
-        color: gold;
-      }
-      & .rating > span {
-        display: inline-block;
-        position: relative;
-        width: 1.1em;
-        font-size: 20px;
-      }
-      & .rating > span:hover,
-      & .rating > span:hover ~ span {
-        color: transparent;
+        & > span {
+          display: inline-block;
+          position: relative;
+          width: 1.1em;
+          font-size: 20px;
+        }
+        & > span.active,
+        & > span.active ~ span {
+          color: transparent;
+        }
+        & > span.active:before,
+        & > span.active ~ span:before {
+          content: "\2605";
+          position: absolute;
+          left: 0;
+          color: gold;
+        }
       }
 
       & h4 {

@@ -2,12 +2,8 @@
   <div :class="$style.container">
     <div :class="$style.form">
       <div :class="$style.btn">
-        <button @click="showSignup" :class="$style.signUpBtn" id="signUpbt">
-          SIGN UP
-        </button>
-        <button @click="showLogin" :class="$style.loginBtn" id="loginbt">
-          LOG IN
-        </button>
+        <button @click="showSignup">SIGN UP</button>
+        <button @click="showLogin">LOG IN</button>
       </div>
       <!-- SingUp -->
       <form ref="formSignup" :class="$style.signUp" action="" method="get">
@@ -114,15 +110,21 @@ export default class Login extends Vue {
     height: 450px;
     background-color: rgba(39, 40, 41, 0.137);
     box-shadow: 0 5px 30px black;
+    padding: 30px 0;
   }
   & .btn button {
     padding: 3px;
     margin: 30px 0px 40px 30px;
-    border-style: none;
+    border: none;
+    border-bottom: 2px solid transparent;
     background-color: transparent;
-    color: re;
+    color: aliceblue;
+    cursor: pointer;
     font-size: 18px;
     font-weight: 550;
+    &:hover {
+      border-bottom: 2px solid rgb(91, 243, 131);
+    }
   }
   & .formGroup {
     display: flex;
@@ -134,20 +136,17 @@ export default class Login extends Vue {
     border-bottom: 2px solid white;
     padding: 10px;
     margin-bottom: 20px;
-    font-size: 14px;
+    font-size: 17px;
     font-weight: bold;
     background-color: transparent;
     color: white;
-  }
-  & input:focus {
-    outline: none !important;
-    border-bottom: 2px solid rgb(91, 243, 131);
-    font-size: 17px;
-    font-weight: bold;
-    color: white;
+    outline: none;
+    &:focus {
+      border-bottom: 2px solid rgb(91, 243, 131);
+    }
   }
   & ::placeholder {
-    color: white;
+    color: rgba(255, 255, 255, 0.753);
   }
   & .checkBox {
     display: flex;
@@ -179,9 +178,6 @@ export default class Login extends Vue {
   }
   & .btn2:hover {
     background-color: rgba(10, 136, 43, 0.5);
-  }
-  & .btn button:hover {
-    border-bottom: 2px solid rgb(91, 243, 131);
   }
 
   /* hide signup form */

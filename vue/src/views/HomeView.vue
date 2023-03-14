@@ -1,7 +1,7 @@
 <template>
   <Header activity="home" />
   <Banner />
-  <RatingProduct />
+  <RatingProduct :products="topProducts" />
   <NewProduct :products="newProducts" />
   <Footer />
 </template>
@@ -14,7 +14,6 @@ import NewProduct from "@/components/home/NewProduct.vue";
 import Header from "@/components/header/Header.vue";
 import { Options, Vue } from "vue-class-component";
 import store from "@/store";
-import { getNewProducts } from "@/api/products";
 import { Product } from "@/utils/types";
 
 @Options({
@@ -31,13 +30,11 @@ export default class HomeView extends Vue {
   topProducts: Product[] = [];
 
   created(): void {
-    // store.dispatch("fetchProducts");
-    getNewProducts().then((res) => {
-      if (res.status === 200) {
-        this.newProducts = res.data;
-      } else {
-        console.log(res);
-      }
+    store.dispatch("getTopProducts").then((product) => {
+      this.topProducts = product;
+    });
+    store.dispatch("getNewProducts").then((product) => {
+      this.newProducts = product;
     });
   }
 }

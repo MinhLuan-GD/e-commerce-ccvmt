@@ -1,7 +1,9 @@
 import { Product } from "@/utils/types";
 import api from ".";
 
+const getProduct = (id: string) => api.get<Product>(`/products/${id}`);
 const getProducts = () => api.get<Product[]>("/products");
 const getNewProducts = () => api.get<Product[]>("/products/new-products");
+const getTopProducts = () => api.get<Product[]>("/products/top-products");
 
-export { getProducts, getNewProducts };
+export { getProducts, getNewProducts, getTopProducts, getProduct };

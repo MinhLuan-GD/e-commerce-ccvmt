@@ -2,138 +2,30 @@
   <div :class="$style.container">
     <h2>Sản phẩm nổi bật</h2>
     <p>Những sản phẩm mới được thiết kế cho mùa hè</p>
-    <div :class="$style.procontaniner" onclick="window.location.href='detail';">
-      <!-- List product -->
-
-      <div :class="$style.pro">
-        <img src="@/assets/img/products/f1.jpg" alt="" />
+    <div :class="$style.procontaniner">
+      <div
+        v-for="product in products"
+        :class="$style.pro"
+        :key="product._id"
+        :onclick="`window.location.href='detail?id=${product._id}';`"
+      >
+        <img :src="productImage(product)" alt="product-image" />
         <div :class="$style.des">
           <span>Thương hiệu Adidas</span>
-          <h5>Cartoon áo thun</h5>
+          <h5>{{ product.title }}</h5>
           <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
+            <span :class="product.rating == 5 ? $style.active : ''">☆</span
+            ><span :class="product.rating == 4 ? $style.active : ''">☆</span
+            ><span :class="product.rating == 3 ? $style.active : ''">☆</span
+            ><span :class="product.rating == 2 ? $style.active : ''">☆</span
+            ><span :class="product.rating == 1 ? $style.active : ''">☆</span>
           </div>
-          <h4>$78</h4>
+          <h4>{{ product.price }}đ</h4>
         </div>
         <div :class="$style.cart">
           <img src="@/assets/img/cart.png" alt="" />
         </div>
       </div>
-
-      <div :class="$style.pro">
-        <img src="@/assets/img/products/f2.jpg" alt="" />
-        <div :class="$style.des">
-          <span>Thương hiệu Adidas</span>
-          <h5>Cartoon áo thun</h5>
-          <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
-          </div>
-          <h4>$78</h4>
-        </div>
-        <div :class="$style.cart">
-          <img src="@/assets/img/cart.png" alt="" />
-        </div>
-      </div>
-
-      <div :class="$style.pro">
-        <img src="@/assets/img/products/f3.jpg" alt="" />
-        <div :class="$style.des">
-          <span>Thương hiệu Adidas</span>
-          <h5>Cartoon áo thun</h5>
-          <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
-          </div>
-          <h4>$78</h4>
-        </div>
-        <div :class="$style.cart">
-          <img src="@/assets/img/cart.png" alt="" />
-        </div>
-      </div>
-
-      <div :class="$style.pro">
-        <img src="@/assets/img/products/f4.jpg" alt="" />
-        <div :class="$style.des">
-          <span>Thương hiệu Adidas</span>
-          <h5>Cartoon áo thun</h5>
-          <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
-          </div>
-          <h4>$78</h4>
-        </div>
-        <div :class="$style.cart">
-          <img src="@/assets/img/cart.png" alt="" />
-        </div>
-      </div>
-
-      <div :class="$style.pro">
-        <img src="@/assets/img/products/f5.jpg" alt="" />
-        <div :class="$style.des">
-          <span>Thương hiệu Adidas</span>
-          <h5>Cartoon áo thun</h5>
-          <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
-          </div>
-          <h4>$78</h4>
-        </div>
-        <div :class="$style.cart">
-          <img src="@/assets/img/cart.png" alt="" />
-        </div>
-      </div>
-
-      <div :class="$style.pro">
-        <img src="@/assets/img/products/f6.jpg" alt="" />
-        <div :class="$style.des">
-          <span>Thương hiệu Adidas</span>
-          <h5>Cartoon áo thun</h5>
-          <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
-          </div>
-          <h4>$78</h4>
-        </div>
-        <div :class="$style.cart">
-          <img src="@/assets/img/cart.png" alt="" />
-        </div>
-      </div>
-
-      <div :class="$style.pro">
-        <img src="@/assets/img/products/f7.jpg" alt="" />
-        <div :class="$style.des">
-          <span>Thương hiệu Adidas</span>
-          <h5>Cartoon áo thun</h5>
-          <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
-          </div>
-          <h4>$78</h4>
-        </div>
-        <div :class="$style.cart">
-          <img src="@/assets/img/cart.png" alt="" />
-        </div>
-      </div>
-
-      <div :class="$style.pro">
-        <img src="@/assets/img/products/f8.jpg" alt="" />
-        <div :class="$style.des">
-          <span>Thương hiệu Adidas</span>
-          <h5>Cartoon áo thun</h5>
-          <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
-          </div>
-          <h4>$78</h4>
-        </div>
-        <div :class="$style.cart">
-          <img src="@/assets/img/cart.png" alt="" />
-        </div>
-      </div>
-
-      <!-- List product -->
     </div>
   </div>
   <div :class="$style.setion">
@@ -146,9 +38,22 @@
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { Product, ProductImage } from "@/utils/types";
+import { Options, Vue } from "vue-class-component";
 
-export default class RatingProduct extends Vue {}
+@Options({
+  props: {
+    products: { type: Object },
+  },
+})
+export default class RatingProduct extends Vue {
+  products!: Product[];
+
+  productImage(product: Product): string {
+    const img = product.images.find((img) => img.isMain) as ProductImage;
+    return `${process.env.VUE_APP_THUMBOR_URL}300x300/products/images/${img.imageUrl}`;
+  }
+}
 </script>
 
 <style lang="scss" module>
@@ -206,23 +111,23 @@ export default class RatingProduct extends Vue {}
         unicode-bidi: bidi-override;
         direction: rtl;
         text-align: end;
-      }
-      & .rating > span:hover:before,
-      & .rating > span:hover ~ span:before {
-        content: "\2605";
-        position: absolute;
-        left: 0;
-        color: gold;
-      }
-      & .rating > span {
-        display: inline-block;
-        position: relative;
-        width: 1.1em;
-        font-size: 20px;
-      }
-      & .rating > span:hover,
-      & .rating > span:hover ~ span {
-        color: transparent;
+        & > span {
+          display: inline-block;
+          position: relative;
+          width: 1.1em;
+          font-size: 20px;
+        }
+        & > span.active,
+        & > span.active ~ span {
+          color: transparent;
+        }
+        & > span.active:before,
+        & > span.active ~ span:before {
+          content: "\2605";
+          position: absolute;
+          left: 0;
+          color: gold;
+        }
       }
 
       & h4 {

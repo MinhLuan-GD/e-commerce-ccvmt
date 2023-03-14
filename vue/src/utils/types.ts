@@ -18,6 +18,8 @@ interface Product {
 
 interface State {
   products: Product[];
+  newProducts: Product[];
+  topProducts: Product[];
 }
 
 export { ProductImage, Product, State };
