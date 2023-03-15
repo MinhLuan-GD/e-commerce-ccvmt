@@ -102,6 +102,7 @@ export default class NewProduct extends Vue {
     justify-content: space-between;
     padding-top: 20px;
     flex-wrap: wrap;
+    cursor: pointer;
   }
   & .pro {
     width: 23%;
@@ -113,9 +114,9 @@ export default class NewProduct extends Vue {
     margin: 15px 0;
     transition: 0.5s ease;
     position: relative;
-
-    & :hover {
-      box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.06);
+    &:hover {
+      transform: scale(1.05) translateY(-10px);
+      box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.1);
     }
     & img {
       width: 100%;
@@ -152,7 +153,7 @@ export default class NewProduct extends Vue {
           content: "\2605";
           position: absolute;
           left: 0;
-          color: gold;
+          color: #000;
         }
       }
 
@@ -175,6 +176,9 @@ export default class NewProduct extends Vue {
       position: absolute;
       bottom: 20px;
       right: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       & img {
         width: 20px;
         height: 20px;

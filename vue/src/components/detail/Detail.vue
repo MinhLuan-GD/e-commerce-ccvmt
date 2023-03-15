@@ -1,16 +1,20 @@
 <template>
   <div :class="$style.container">
     <div :class="$style.singlepropimage">
-      <img :src="getMainImageUrl(product.images)" id="MainImg" alt="" />
+      <img :src="getMainImageUrl(mainImage)" id="MainImg" alt="" />
 
       <div :class="$style.smallimggroup">
         <div
-          v-for="img in getSmallImageUrl(product.images)"
+          v-for="img in product.images"
           :class="$style.smallimgcol"
-          :key="img.url"
-          @click="() => changeMainImage(img.url)"
+          :key="img.imageUrl"
+          @click="() => changeMainImage(img.imageUrl)"
         >
-          <img :src="img.cdn" :class="$style.smallimg" alt="" />
+          <img
+            :src="getSmallImageUrl(img.imageUrl)"
+            :class="img.isMain ? $style.active : ''"
+            alt=""
+          />
         </div>
       </div>
     </div>
@@ -39,7 +43,7 @@
 
 <script lang="ts">
 import { getProduct } from "@/api/products";
-import { Product, ProductImage } from "@/utils/types";
+import { Product } from "@/utils/types";
 import { Vue } from "vue-class-component";
 
 export default class Detail extends Vue {
@@ -56,11 +60,13 @@ export default class Detail extends Vue {
     updatedAt: "",
   };
   description: string | Document = "";
+  mainImage = "";
 
   created() {
     const id = this.$route.query.id as string;
     if (id) {
       getProduct(id).then(({ data }) => {
+        this.mainImage = data.images.filter((i) => i.isMain)[0].imageUrl;
         this.product = data;
         this.description = new DOMParser().parseFromString(
           data.description,
@@ -70,28 +76,18 @@ export default class Detail extends Vue {
     }
   }
 
-  getMainImageUrl(images: ProductImage[]): string {
-    if (!images.length) return "";
-    return `${process.env.VUE_APP_THUMBOR_URL}500x500/products/images/${
-      images.filter((i) => i.isMain)[0].imageUrl
-    }`;
+  getMainImageUrl(url: string): string {
+    if (!url) return "";
+    return `${process.env.VUE_APP_THUMBOR_URL}500x500/products/images/${url}`;
   }
 
-  getSmallImageUrl(images: ProductImage[]): { cdn: string; url: string }[] {
-    if (!images.length) return [];
-    const result: { cdn: string; url: string }[] = [];
-    images.forEach((i) => {
-      if (!i.isMain) {
-        result.push({
-          cdn: `${process.env.VUE_APP_THUMBOR_URL}100x100/products/images/${i.imageUrl}`,
-          url: i.imageUrl,
-        });
-      }
-    });
-    return result;
+  getSmallImageUrl(url: string): string {
+    if (!url) return "";
+    return `${process.env.VUE_APP_THUMBOR_URL}100x100/products/images/${url}`;
   }
 
   changeMainImage(img: string) {
+    this.mainImage = img;
     for (let i = 0; i < this.product.images.length; i++) {
       if (this.product.images[i].imageUrl == img) {
         this.product.images[i].isMain = true;
@@ -124,6 +120,9 @@ export default class Detail extends Vue {
         flex-basis: 24%;
         margin-right: 5px;
         cursor: pointer;
+        & .active {
+          border: 2px solid #ef3636;
+        }
       }
 
       & .smallimgcol:last-child {
