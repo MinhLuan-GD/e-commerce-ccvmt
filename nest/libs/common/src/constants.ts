@@ -13,3 +13,10 @@ export enum Services {
   PRODUCTS = 'PRODUCTS_SERVICE',
   ORDERS = 'ORDERS_SERVICE',
 }
+
+export enum Models {
+  USER = 'User',
+  CATEGORY = 'Category',
+  PRODUCT = 'Product',
+  ORDER = 'Order',
+}

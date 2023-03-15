@@ -4,8 +4,8 @@ import { ConfigModule } from '@nestjs/config';
 import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Product, ProductSchema } from './schemas/product.schema';
-import { Services } from '@app/common/constants';
+import { ProductSchema } from './schemas/product.schema';
+import { Models, Services } from '@app/common/constants';
 import { ProductsRepository } from './products.repository';
 import * as Joi from 'joi';
 
@@ -24,7 +24,9 @@ import * as Joi from 'joi';
       }),
     }),
     DatabaseModule,
-    MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
+    MongooseModule.forFeature([
+      { name: Models.PRODUCT, schema: ProductSchema },
+    ]),
     RmqModule,
   ],
   controllers: [ProductsController],

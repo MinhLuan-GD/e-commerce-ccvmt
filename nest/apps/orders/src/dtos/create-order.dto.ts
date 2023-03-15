@@ -26,7 +26,7 @@ class Cart {
   quantity: number;
 }
 
-export class CreateOrderDro {
+export class CreateOrderDto {
   @IsString()
   @IsNotEmpty()
   userId: string;

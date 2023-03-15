@@ -4,7 +4,8 @@ import { ConfigModule } from '@nestjs/config';
 import { CategoriesController } from './categories.controller';
 import { CategoriesService } from './categories.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Category, CategorySchema } from './schemas/category.schema';
+import { CategorySchema } from './schemas/category.schema';
+import { Models } from '@app/common/constants';
 import * as Joi from 'joi';
 
 @Module({
@@ -23,7 +24,7 @@ import * as Joi from 'joi';
     }),
     DatabaseModule,
     MongooseModule.forFeature([
-      { name: Category.name, schema: CategorySchema },
+      { name: Models.CATEGORY, schema: CategorySchema },
     ]),
     RmqModule,
   ],

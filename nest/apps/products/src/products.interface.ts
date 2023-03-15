@@ -9,4 +9,5 @@ export interface IProductsService {
   getProduct(id: string): Promise<Product>;
   updateProduct(id: string, dto: any): Promise<Product>;
   modifyProduct(id: string, dto: Partial<any>): Promise<Product>;
+  updateProductStock(id: string, quantity: number): Promise<boolean>;
 }

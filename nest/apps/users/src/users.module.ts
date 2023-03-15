@@ -4,7 +4,8 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from './schemas/user.schema';
+import { UserSchema } from './schemas/user.schema';
+import { Models } from '@app/common/constants';
 import * as Joi from 'joi';
 
 @Module({
@@ -22,7 +23,7 @@ import * as Joi from 'joi';
       }),
     }),
     DatabaseModule,
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: Models.USER, schema: UserSchema }]),
     RmqModule,
   ],
   controllers: [UsersController],

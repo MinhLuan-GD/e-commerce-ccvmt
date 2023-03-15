@@ -35,4 +35,12 @@ export class ProductsService implements IProductsService {
   modifyProduct(id: string, dto: Partial<any>): Promise<Product> {
     throw new Error('Method not implemented.');
   }
+
+  async updateProductStock(id: string, quantity: number): Promise<boolean> {
+    const product = await this.productRepo.updateOne(
+      { _id: id, quantity: { $gte: quantity } },
+      { $inc: { quantity: -quantity } },
+    );
+    return !!product;
+  }
 }

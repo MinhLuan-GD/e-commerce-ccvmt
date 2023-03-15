@@ -8,6 +8,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { IProductsService } from './products.interface';
 
@@ -41,5 +42,10 @@ export class ProductsController {
   @Get(':id')
   getProduct(@Param('id') id: string) {
     return this.productsService.getProduct(id);
+  }
+
+  @MessagePattern('update-product-stock')
+  updateProductStock(data: any) {
+    return this.productsService.updateProductStock(data.id, data.quantity);
   }
 }
