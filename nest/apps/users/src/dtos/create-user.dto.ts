@@ -5,8 +5,6 @@ export class CreateUserDto {
   @IsEmail()
   email: string;
 
-  phone: string;
-
   @IsString()
   @MinLength(8)
   @MaxLength(20)

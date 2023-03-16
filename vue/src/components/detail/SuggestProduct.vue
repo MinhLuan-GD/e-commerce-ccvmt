@@ -9,8 +9,8 @@
           <span>Thương hiệu Adidas</span>
           <h5>Cartoon áo thun</h5>
           <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
+            <span :class="$style.active">☆</span><span>☆</span><span>☆</span
+            ><span>☆</span><span>☆</span>
           </div>
           <h4>$78</h4>
         </div>
@@ -25,8 +25,8 @@
           <span>Thương hiệu Adidas</span>
           <h5>Cartoon áo thun</h5>
           <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
+            <span :class="$style.active">☆</span><span>☆</span><span>☆</span
+            ><span>☆</span><span>☆</span>
           </div>
           <h4>$78</h4>
         </div>
@@ -41,8 +41,8 @@
           <span>Thương hiệu Adidas</span>
           <h5>Cartoon áo thun</h5>
           <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
+            <span :class="$style.active">☆</span><span>☆</span><span>☆</span
+            ><span>☆</span><span>☆</span>
           </div>
           <h4>$78</h4>
         </div>
@@ -57,8 +57,8 @@
           <span>Thương hiệu Adidas</span>
           <h5>Cartoon áo thun</h5>
           <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
+            <span :class="$style.active">☆</span><span>☆</span><span>☆</span
+            ><span>☆</span><span>☆</span>
           </div>
           <h4>$78</h4>
         </div>
@@ -73,8 +73,8 @@
           <span>Thương hiệu Adidas</span>
           <h5>Cartoon áo thun</h5>
           <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
+            <span :class="$style.active">☆</span><span>☆</span><span>☆</span
+            ><span>☆</span><span>☆</span>
           </div>
           <h4>$78</h4>
         </div>
@@ -89,8 +89,8 @@
           <span>Thương hiệu Adidas</span>
           <h5>Cartoon áo thun</h5>
           <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
+            <span :class="$style.active">☆</span><span>☆</span><span>☆</span
+            ><span>☆</span><span>☆</span>
           </div>
           <h4>$78</h4>
         </div>
@@ -105,8 +105,8 @@
           <span>Thương hiệu Adidas</span>
           <h5>Cartoon áo thun</h5>
           <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
+            <span :class="$style.active">☆</span><span>☆</span><span>☆</span
+            ><span>☆</span><span>☆</span>
           </div>
           <h4>$78</h4>
         </div>
@@ -121,8 +121,8 @@
           <span>Thương hiệu Adidas</span>
           <h5>Cartoon áo thun</h5>
           <div :class="$style.rating">
-            <span>☆</span><span>☆</span><span>☆</span><span>☆</span
-            ><span>☆</span>
+            <span :class="$style.active">☆</span><span>☆</span><span>☆</span
+            ><span>☆</span><span>☆</span>
           </div>
           <h4>$78</h4>
         </div>
@@ -171,11 +171,12 @@ export default class SuggestProduct extends Vue {}
     border-radius: 2px;
     box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.02);
     margin: 15px 0;
+    cursor: pointer;
     transition: 0.5s ease;
     position: relative;
-
-    & :hover {
-      box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.06);
+    &:hover {
+      transform: scale(1.05) translateY(-10px);
+      box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.1);
     }
     & img {
       width: 100%;
@@ -197,23 +198,23 @@ export default class SuggestProduct extends Vue {}
         unicode-bidi: bidi-override;
         direction: rtl;
         text-align: end;
-      }
-      & .rating > span:hover:before,
-      & .rating > span:hover ~ span:before {
-        content: "\2605";
-        position: absolute;
-        left: 0;
-        color: gold;
-      }
-      & .rating > span {
-        display: inline-block;
-        position: relative;
-        width: 1.1em;
-        font-size: 20px;
-      }
-      & .rating > span:hover,
-      & .rating > span:hover ~ span {
-        color: transparent;
+        & > span {
+          display: inline-block;
+          position: relative;
+          width: 1.1em;
+          font-size: 20px;
+        }
+        & > span.active,
+        & > span.active ~ span {
+          color: transparent;
+        }
+        & > span.active:before,
+        & > span.active ~ span:before {
+          content: "\2605";
+          position: absolute;
+          left: 0;
+          color: #000;
+        }
       }
 
       & h4 {
@@ -235,6 +236,9 @@ export default class SuggestProduct extends Vue {}
       position: absolute;
       bottom: 20px;
       right: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       & img {
         width: 20px;
         height: 20px;

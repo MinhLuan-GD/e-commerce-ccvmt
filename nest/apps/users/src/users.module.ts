@@ -5,8 +5,9 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from './schemas/user.schema';
-import { Models } from '@app/common/constants';
+import { Models, Services } from '@app/common/constants';
 import * as Joi from 'joi';
+import { UsersRepository } from './users.repository';
 
 @Module({
   imports: [
@@ -27,6 +28,18 @@ import * as Joi from 'joi';
     RmqModule,
   ],
   controllers: [UsersController],
-  providers: [UsersService],
+  providers: [
+    {
+      provide: Services.USERS,
+      useClass: UsersService,
+    },
+    UsersRepository,
+  ],
+  exports: [
+    {
+      provide: Services.USERS,
+      useClass: UsersService,
+    },
+  ],
 })
 export class UsersModule {}

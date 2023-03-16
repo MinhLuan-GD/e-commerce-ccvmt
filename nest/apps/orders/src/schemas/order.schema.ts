@@ -19,9 +19,6 @@ export class Order {
   @Prop({ enum: OrderStatus, default: OrderStatus.CREATED })
   status: string;
 
-  @Prop({ required: true, type: mongoose.Schema.Types.Date })
-  expiresAt: string;
-
   @Prop({ required: true, type: [CartSchema] })
   cart: Cart[];
 

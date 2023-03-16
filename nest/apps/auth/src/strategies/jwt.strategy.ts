@@ -5,12 +5,13 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { TokenPayload } from '../auth.service';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
+import { Services } from '@app/common/constants';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     config: ConfigService,
-    @Inject('USERS_SERVICE') private readonly usersClient: ClientProxy,
+    @Inject(Services.USERS) private readonly usersClient: ClientProxy,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([

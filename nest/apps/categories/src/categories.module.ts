@@ -5,8 +5,9 @@ import { CategoriesController } from './categories.controller';
 import { CategoriesService } from './categories.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CategorySchema } from './schemas/category.schema';
-import { Models } from '@app/common/constants';
+import { Models, Services } from '@app/common/constants';
 import * as Joi from 'joi';
+import { CategoriesRepository } from './categories.repository';
 
 @Module({
   imports: [
@@ -29,6 +30,18 @@ import * as Joi from 'joi';
     RmqModule,
   ],
   controllers: [CategoriesController],
-  providers: [CategoriesService],
+  providers: [
+    {
+      provide: Services.CATEGORIES,
+      useClass: CategoriesService,
+    },
+    CategoriesRepository,
+  ],
+  exports: [
+    {
+      provide: Services.CATEGORIES,
+      useClass: CategoriesService,
+    },
+  ],
 })
 export class CategoriesModule {}

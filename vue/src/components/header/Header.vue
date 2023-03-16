@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.container">
-    <div :class="$style.logo" onclick="window.location.href = '/';">
+    <div :class="$style.logo" @click="() => $router.push('/')">
       <img src="@/assets/img/logo1.png" alt="logo" />
     </div>
     <div :class="$style.navbar">

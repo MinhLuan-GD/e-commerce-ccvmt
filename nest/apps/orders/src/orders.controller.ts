@@ -1,23 +1,26 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { CreateOrderDro } from './dtos/create-order.dto';
-import { OrdersService } from './orders.service';
+import { Routes, Services } from '@app/common/constants';
+import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import { CreateOrderDto } from './dtos/create-order.dto';
+import { IOrdersService } from './orders.interface';
 
-@Controller()
+@Controller(Routes.ORDERS)
 export class OrdersController {
-  constructor(private readonly ordersService: OrdersService) {}
+  constructor(
+    @Inject(Services.ORDERS) private readonly ordersService: IOrdersService,
+  ) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDro) {
-    return this.ordersService.create(createOrderDto);
+  create(@Body() createOrderDto: CreateOrderDto) {
+    return this.ordersService.createOrder(createOrderDto);
   }
 
   @Get()
   findAll() {
-    return this.ordersService.findAll();
+    return this.ordersService.getOrders();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.ordersService.findOne(id);
+    return this.ordersService.getOrderById(id);
   }
 }

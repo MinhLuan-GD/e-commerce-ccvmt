@@ -1,3 +1,4 @@
+import { Services } from '@app/common/constants';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { PassportStrategy } from '@nestjs/passport';
@@ -7,7 +8,7 @@ import { lastValueFrom } from 'rxjs';
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(
-    @Inject('USERS_SERVICE') private readonly usersClient: ClientProxy,
+    @Inject(Services.USERS) private readonly usersClient: ClientProxy,
   ) {
     super({ usernameField: 'email' });
   }

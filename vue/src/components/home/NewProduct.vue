@@ -7,7 +7,7 @@
         v-for="product in products"
         :class="$style.pro"
         :key="product._id"
-        :onclick="`window.location.href='detail?id=${product._id}';`"
+        @click="() => $router.push(`/detail?id=${product._id}`)"
       >
         <img :src="productImage(product)" alt="product-image" />
         <div :class="$style.des">
@@ -64,7 +64,8 @@
 </template>
 
 <script lang="ts">
-import { Product, ProductImage } from "@/utils/types";
+import { Product } from "@/models/product";
+import { ProductImage } from "@/models/product-image";
 import { Options, Vue } from "vue-class-component";
 
 @Options({

@@ -5,6 +5,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import * as Joi from 'joi';
+import { JwtStrategy } from './strategies/jwt.strategy';
+import { GoogleStrategy } from './strategies/google.strategy';
+import { LocalStrategy } from './strategies/local.strategy';
 
 @Module({
   imports: [
@@ -24,7 +27,7 @@ import * as Joi from 'joi';
       useFactory: (config: ConfigService) => ({
         secret: config.get<string>('JWT_SECRET'),
         signOptions: {
-          expiresIn: `${config.get('JWT_EXPIRATION')}s`,
+          expiresIn: `${config.get('JWT_EXPIRATION')}`,
         },
       }),
       inject: [ConfigService],
@@ -33,6 +36,6 @@ import * as Joi from 'joi';
     RmqModule.register({ name: 'users' }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, JwtStrategy, GoogleStrategy, LocalStrategy],
 })
 export class AuthModule {}

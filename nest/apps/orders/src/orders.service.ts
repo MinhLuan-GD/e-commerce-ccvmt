@@ -1,5 +1,5 @@
 import { Services } from '@app/common/constants';
-import { HttpException, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, BadRequestException } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { CreateOrderDto } from './dtos/create-order.dto';
@@ -21,8 +21,6 @@ export class OrdersService implements IOrdersService {
       0,
     );
     const totalPrice = itemsPrice + shippingPrice;
-    const expiresAt = new Date();
-    expiresAt.setMinutes(expiresAt.getMinutes() + 30);
 
     for (let i = 0; i < order.cart.length; i++) {
       const item = order.cart[i];
@@ -33,7 +31,7 @@ export class OrdersService implements IOrdersService {
         }),
       );
       if (!data) {
-        throw new HttpException('Product not enough stock', 400);
+        throw new BadRequestException('Product not enough stock');
       }
     }
 
@@ -42,7 +40,6 @@ export class OrdersService implements IOrdersService {
       shippingPrice,
       itemsPrice,
       totalPrice,
-      expiresAt: JSON.stringify(expiresAt),
     });
   }
 

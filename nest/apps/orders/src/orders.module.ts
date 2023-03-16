@@ -5,7 +5,7 @@ import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrderSchema } from './schemas/order.schema';
-import { Models } from '@app/common/constants';
+import { Models, Services } from '@app/common/constants';
 import * as Joi from 'joi';
 
 @Module({
@@ -27,6 +27,17 @@ import * as Joi from 'joi';
     RmqModule,
   ],
   controllers: [OrdersController],
-  providers: [OrdersService],
+  providers: [
+    {
+      provide: Services.ORDERS,
+      useClass: OrdersService,
+    },
+  ],
+  exports: [
+    {
+      provide: Services.ORDERS,
+      useClass: OrdersService,
+    },
+  ],
 })
 export class OrdersModule {}

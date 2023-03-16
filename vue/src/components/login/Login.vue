@@ -1,74 +1,65 @@
 <template>
   <div :class="$style.container">
     <div :class="$style.form">
-      <div :class="$style.btn">
+      <div id="changeSideBtn" :class="$style.btn">
         <button @click="showSignup">SIGN UP</button>
         <button @click="showLogin">LOG IN</button>
       </div>
       <!-- SingUp -->
-      <form ref="formSignup" :class="$style.signUp" action="" method="get">
+      <form ref="formSignup" :class="$style.signUp">
         <div :class="$style.formGroup">
           <input
             type="email"
             placeholder="Email"
-            name="email"
-            required
             autocomplete="off"
+            v-model="signupModel.email"
           />
         </div>
         <div :class="$style.formGroup">
           <input
             type="password"
-            id="password"
             placeholder="Mật khẩu"
-            required
             autocomplete="off"
+            v-model="signupModel.password"
           />
         </div>
         <div :class="$style.formGroup">
           <input
             type="password"
-            id="confirmPassword"
             placeholder="Nhập lại mật khẩu"
-            required
             autocomplete="off"
+            v-model="confirmPassword"
           />
         </div>
-        <div :class="$style.checkBox">
-          <input type="checkbox" name="checkbox" id="checkbox" />
-          <span :class="$style.text">Bạn đồng ý</span>
-        </div>
         <div :class="$style.formGroup">
-          <button type="button" :class="$style.btn2">Đăng ký</button>
+          <button @click="handleSignup" type="button" :class="$style.btn2">
+            Đăng ký
+          </button>
         </div>
       </form>
 
       <!------ Login Form -------- -->
-      <form ref="formLogin" :class="$style.login" action="" method="get">
+      <form ref="formLogin" :class="$style.login">
         <div :class="$style.formGroup">
           <input
             type="email"
             placeholder="Email"
-            name="email"
-            required
             autocomplete="off"
+            v-model="loginModel.email"
           />
         </div>
         <div :class="$style.formGroup">
           <input
             type="password"
-            id="password"
             placeholder="Mật khẩu"
-            required
             autocomplete="off"
+            v-model="loginModel.password"
           />
         </div>
-        <div :class="$style.checkBox">
-          <input type="checkbox" name="checkbox" id="checkbox" />
-          <span :class="$style.text">Nhớ cho lần sau</span>
-        </div>
         <div :class="$style.formGroup">
-          <button type="button" :class="$style.btn2">Đăng nhập</button>
+          <button @click="handleLogin" type="button" :class="$style.btn2">
+            Đăng nhập
+          </button>
         </div>
       </form>
     </div>
@@ -76,21 +67,60 @@
 </template>
 
 <script lang="ts">
+import { signup } from "@/api/user";
+import { SignModel } from "@/models/sign";
 import { ref } from "vue";
 import { Vue } from "vue-class-component";
 
 export default class Login extends Vue {
   formLogin = ref() as unknown as HTMLFormElement;
   formSignup = ref() as unknown as HTMLFormElement;
+  loginModel = new SignModel();
+  signupModel = new SignModel();
+  confirmPassword = "";
+
+  mounted() {
+    const btn = document.getElementById("changeSideBtn")
+      ?.children[0] as HTMLButtonElement;
+    btn.style.borderBottom = "2px solid rgb(91, 243, 131)";
+  }
 
   showLogin() {
     this.formSignup.style.display = "none";
     this.formLogin.style.display = "block";
+    const change = document.getElementById("changeSideBtn");
+    const btn1 = change?.children[0] as HTMLButtonElement;
+    const btn2 = change?.children[1] as HTMLButtonElement;
+    btn1.style.borderBottom = "2px solid transparent";
+    btn2.style.borderBottom = "2px solid rgb(91, 243, 131)";
   }
 
   showSignup() {
     this.formLogin.style.display = "none";
     this.formSignup.style.display = "block";
+    const change = document.getElementById("changeSideBtn");
+    const btn1 = change?.children[0] as HTMLButtonElement;
+    const btn2 = change?.children[1] as HTMLButtonElement;
+    btn1.style.borderBottom = "2px solid rgb(91, 243, 131)";
+    btn2.style.borderBottom = "2px solid transparent";
+  }
+
+  handleLogin() {
+    console.log("login");
+  }
+
+  handleSignup() {
+    if (this.signupModel.password !== this.confirmPassword) {
+      alert("Mật khẩu không khớp");
+      return;
+    }
+    signup(this.signupModel).then((res) => {
+      if (res.status === 201) {
+        alert("Đăng ký thành công");
+      } else {
+        alert("Đăng ký thất bại");
+      }
+    });
   }
 }
 </script>
@@ -144,29 +174,11 @@ export default class Login extends Vue {
     &:focus {
       border-bottom: 2px solid rgb(91, 243, 131);
     }
-  }
-  & ::placeholder {
-    color: rgba(255, 255, 255, 0.753);
-  }
-  & .checkBox {
-    display: flex;
-    justify-content: center;
-    margin: 16px !important;
-    & span {
-      color: red;
-      margin-left: 11px;
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.753);
     }
   }
 
-  & .checkbox {
-    margin-right: 10px;
-    height: 15px;
-    width: 15px;
-  }
-  & text {
-    color: rgba(255, 0, 0, 0.682);
-    font-size: 13px;
-  }
   & .btn2 {
     padding: 10px;
     width: 150px;
@@ -175,23 +187,15 @@ export default class Login extends Vue {
     border-style: none;
     color: white;
     font-weight: 600;
-  }
-  & .btn2:hover {
-    background-color: rgba(10, 136, 43, 0.5);
+    margin-top: 40px;
+    &:hover {
+      background-color: rgba(10, 136, 43, 0.5);
+    }
   }
 
   /* hide signup form */
   & .login {
     display: none;
-  }
-
-  /* Login form code */
-  & .login .checkBox {
-    margin-top: 30px !important;
-    & span {
-      color: red;
-      margin-left: 11px;
-    }
   }
 }
 </style>

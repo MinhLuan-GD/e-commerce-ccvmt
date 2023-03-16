@@ -14,7 +14,7 @@ import NewProduct from "@/components/home/NewProduct.vue";
 import Header from "@/components/header/Header.vue";
 import { Options, Vue } from "vue-class-component";
 import store from "@/store";
-import { Product } from "@/utils/types";
+import { Product } from "@/models/product";
 
 @Options({
   components: {

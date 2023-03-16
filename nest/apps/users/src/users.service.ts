@@ -3,13 +3,14 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { compareSync, hashSync } from 'bcrypt';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { User } from './schemas/user.schema';
+import { IUsersService } from './users.interface';
 import { UsersRepository } from './users.repository';
 
 @Injectable()
-export class UsersService {
+export class UsersService implements IUsersService {
   constructor(private readonly usersRepo: UsersRepository) {}
 
-  async createUser(createUserDto: CreateUserDto) {
+  async createUser(createUserDto: CreateUserDto): Promise<User> {
     const findUser = await this.usersRepo.findOne({
       email: createUserDto.email,
     });
@@ -30,7 +31,7 @@ export class UsersService {
     return compareSync(password, hashPass) ? rs : null;
   }
 
-  async upsertUser(email: string) {
+  async upsertUser(email: string): Promise<User> {
     return this.usersRepo.upsert({ email }, {}, '-password');
   }
 

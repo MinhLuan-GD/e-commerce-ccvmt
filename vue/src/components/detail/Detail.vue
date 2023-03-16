@@ -43,22 +43,11 @@
 
 <script lang="ts">
 import { getProduct } from "@/api/products";
-import { Product } from "@/utils/types";
+import { Product } from "@/models/product";
 import { Vue } from "vue-class-component";
 
 export default class Detail extends Vue {
-  product: Product = {
-    _id: "",
-    title: "",
-    price: 0,
-    description: "",
-    countInStock: 0,
-    rating: 0,
-    images: [],
-    category: "",
-    createdAt: "",
-    updatedAt: "",
-  };
+  product: Product = new Product();
   description: string | Document = "";
   mainImage = "";
 

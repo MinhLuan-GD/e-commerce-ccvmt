@@ -1,20 +1,4 @@
-interface ProductImage {
-  imageUrl: string;
-  isMain: boolean;
-}
-
-interface Product {
-  _id: string;
-  title: string;
-  description: string;
-  images: ProductImage[];
-  rating: number;
-  price: number;
-  category: string;
-  countInStock: number;
-  createdAt: string;
-  updatedAt: string;
-}
+import { Product } from "@/models/product";
 
 interface State {
   products: Product[];
@@ -22,4 +6,4 @@ interface State {
   topProducts: Product[];
 }
 
-export { ProductImage, Product, State };
+export { State };

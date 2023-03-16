@@ -1,12 +1,27 @@
-import { Controller, Get } from '@nestjs/common';
-import { CategoriesService } from './categories.service';
+import { Routes, Services } from '@app/common/constants';
+import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import { ICategoriesService } from './categories.interface';
+import { CreateCategoryDto } from './dtos/create-category.dto';
 
-@Controller()
+@Controller(Routes.CATEGORIES)
 export class CategoriesController {
-  constructor(private readonly categoriesService: CategoriesService) {}
+  constructor(
+    @Inject(Services.CATEGORIES)
+    private readonly categoriesService: ICategoriesService,
+  ) {}
 
   @Get()
-  getHello(): string {
-    return this.categoriesService.getHello();
+  findAll() {
+    return this.categoriesService.getCategories();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.categoriesService.getCategoryById(id);
+  }
+
+  @Post()
+  create(@Body() createCategoryDto: CreateCategoryDto) {
+    return this.categoriesService.createCategory(createCategoryDto);
   }
 }

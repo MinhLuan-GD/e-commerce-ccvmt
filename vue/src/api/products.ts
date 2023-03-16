@@ -1,4 +1,4 @@
-import { Product } from "@/utils/types";
+import { Product } from "@/models/product";
 import api from ".";
 
 const getProduct = (id: string) => api.get<Product>(`/products/${id}`);
