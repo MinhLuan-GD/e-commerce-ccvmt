@@ -22,7 +22,7 @@
           </div>
           <h4>{{ product.price }}đ</h4>
         </div>
-        <div :class="$style.cart">
+        <div :class="$style.cart" @click.stop="() => setCart(product)">
           <img src="@/assets/img/cart.png" alt="" />
         </div>
       </div>
@@ -66,6 +66,7 @@
 <script lang="ts">
 import { Product } from "@/models/product";
 import { ProductImage } from "@/models/product-image";
+import store from "@/store";
 import { Options, Vue } from "vue-class-component";
 
 @Options({
@@ -79,6 +80,11 @@ export default class NewProduct extends Vue {
   productImage(product: Product): string {
     const img = product.images.find((img) => img.isMain) as ProductImage;
     return `${process.env.VUE_APP_THUMBOR_URL}300x300/products/images/${img.imageUrl}`;
+  }
+
+  setCart(product: Product) {
+    store.dispatch("pushToCart", { product, quantity: 1 });
+    alert(`Đã thêm ${product.title} vào giỏ hàng`);
   }
 }
 </script>
@@ -107,7 +113,7 @@ export default class NewProduct extends Vue {
   }
   & .pro {
     width: 23%;
-    min-width: n250px;
+    min-width: 250px;
     padding: 10px 12px;
     border: 1px solid #cce7d0;
     border-radius: 10px;

@@ -67,10 +67,11 @@
 </template>
 
 <script lang="ts">
-import { signup } from "@/api/user";
+import { login, signup } from "@/api/user";
 import { SignModel } from "@/models/sign";
 import { ref } from "vue";
 import { Vue } from "vue-class-component";
+import store from "@/store";
 
 export default class Login extends Vue {
   formLogin = ref() as unknown as HTMLFormElement;
@@ -106,7 +107,15 @@ export default class Login extends Vue {
   }
 
   handleLogin() {
-    console.log("login");
+    login(this.loginModel).then((res) => {
+      if (res.status === 201) {
+        alert("Đăng nhập thành công");
+        store.dispatch("setUser", res.data);
+        this.$router.push("/");
+      } else {
+        alert("Đăng nhập thất bại");
+      }
+    });
   }
 
   handleSignup() {
@@ -116,7 +125,8 @@ export default class Login extends Vue {
     }
     signup(this.signupModel).then((res) => {
       if (res.status === 201) {
-        alert("Đăng ký thành công");
+        alert("Đăng ký thành công, vui lòng đăng nhập");
+        this.showLogin();
       } else {
         alert("Đăng ký thất bại");
       }

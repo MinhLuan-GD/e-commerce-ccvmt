@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { OrderSchema } from './schemas/order.schema';
 import { Models, Services } from '@app/common/constants';
 import * as Joi from 'joi';
+import { OrdersRepository } from './orders.repository';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import * as Joi from 'joi';
     DatabaseModule,
     MongooseModule.forFeature([{ name: Models.ORDER, schema: OrderSchema }]),
     RmqModule,
+    RmqModule.register({ name: 'products' }),
   ],
   controllers: [OrdersController],
   providers: [
@@ -32,6 +34,7 @@ import * as Joi from 'joi';
       provide: Services.ORDERS,
       useClass: OrdersService,
     },
+    OrdersRepository,
   ],
   exports: [
     {

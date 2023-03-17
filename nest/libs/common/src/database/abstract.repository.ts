@@ -50,7 +50,6 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
         new: true,
       })
       .lean();
-    if (!document) throw new NotFoundException('Document not found.');
     return document;
   }
 

@@ -1,12 +1,14 @@
 <template>
   <div :class="$style.container">
-    <h2>Sản phẩm nổi bật</h2>
-    <p>Những sản phẩm mới được thiết kế cho mùa hè</p>
+    <h2>Giao dịch siêu giá trị tại MST</h2>
+    <p>MST <span> giảm giá </span>giảm tận sản phẩm tới <span>70%!</span></p>
+  </div>
+  <div :class="$style.container2">
     <div :class="$style.procontaniner">
       <div
-        v-for="product in products"
-        :class="$style.pro"
+        v-for="product in $store.state.products"
         :key="product._id"
+        :class="$style.pro"
         @click="() => $router.push(`/detail?id=${product._id}`)"
       >
         <img :src="productImage(product)" alt="product-image" />
@@ -29,10 +31,12 @@
     </div>
   </div>
   <div :class="$style.setion">
-    <div :class="$style.banner">
-      <h4>Sale độc quyền tại MST</h4>
-      <h2>Cập nhật <span>giảm 70% </span>- Tất cả áo thun và phụ kiện</h2>
-      <button :class="$style.normal">Mua sắm nhiều hơn</button>
+    <div :class="$style.pagination">
+      <a href="#" :class="$style.spacer">1</a>
+      <a href="#" :class="$style.spacer">2</a>
+      <div :class="`${$style['search-icon']} ${$style.spacer}`">
+        <img src="@/assets/img/arrow.png" alt="" />
+      </div>
     </div>
   </div>
 </template>
@@ -41,16 +45,9 @@
 import { Product } from "@/models/product";
 import { ProductImage } from "@/models/product-image";
 import store from "@/store";
-import { Options, Vue } from "vue-class-component";
+import { Vue } from "vue-class-component";
 
-@Options({
-  props: {
-    products: { type: Object },
-  },
-})
-export default class RatingProduct extends Vue {
-  products!: Product[];
-
+export default class Conten extends Vue {
   productImage(product: Product): string {
     const img = product.images.find((img) => img.isMain) as ProductImage;
     return `${process.env.VUE_APP_THUMBOR_URL}300x300/products/images/${img.imageUrl}`;
@@ -65,29 +62,41 @@ export default class RatingProduct extends Vue {
 
 <style lang="scss" module>
 .container {
-  padding: 40px 80px;
+  background-image: url("@/assets/img/banner/b1.jpg");
+  width: 100%;
+  height: 40vh;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
   text-align: center;
-  user-select: none;
+  flex-direction: column;
+  padding: 14px;
   & h2 {
     font-size: 46px;
     line-height: 54px;
-    color: #222;
+    color: #fff;
   }
   & p {
-    font-size: 26px;
-    color: #465b52;
-    margin: 15px 0 20px 0;
+    font-size: 46px;
+    line-height: 54px;
+    color: #fff;
   }
+  & span {
+    color: #ef3636;
+  }
+}
+.container2 {
+  padding: 40px 80px;
+  text-align: center;
   & .procontaniner {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
     padding-top: 20px;
-    flex-wrap: wrap;
-    cursor: pointer;
   }
   & .pro {
-    width: 23%;
-    min-width: n250px;
+    width: 90%;
+    min-width: 250px;
+    max-width: 400px;
     padding: 10px 12px;
     border: 1px solid #cce7d0;
     border-radius: 10px;
@@ -168,52 +177,37 @@ export default class RatingProduct extends Vue {
   }
 }
 .setion {
-  margin: 40px 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Spartan", sans-serif;
-  & .banner {
+  padding: 40px 80px;
+  margin: 10px;
+
+  .pagination {
+    text-align: center;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    background-image: url("@/assets/img/banner/b2.jpg");
-    width: 100%;
-    height: 40vh;
-    background-size: cover;
-    background-position: center;
-    & h4 {
-      color: #fff;
-      font-size: 16px;
+
+    & .spacer {
+      margin-left: 2px;
+      margin-right: 2px;
     }
-    & h2 {
-      color: #fff;
-      font-size: 16px;
-      padding: 10px 0;
-    }
-    & h2 span {
-      color: #ef3636;
-    }
-    & button:hover {
-      background: #088178;
-      color: #fff;
-    }
-    & button.normal {
-      font-size: 14px;
-      font-weight: 600;
-      padding: 15px 30px;
-      color: #000;
-      background-color: #fff;
+
+    & a {
+      text-decoration: none;
+      background-color: #088178;
+      padding: 15px 20px;
       border-radius: 4px;
-      cursor: pointer;
-      border: none;
-      outline: none;
-      transition: 0.2s;
-    }
-    & button:hover {
-      background: #088178;
       color: #fff;
+      font-weight: 600;
+    }
+
+    .search-icon {
+      padding: 12px 15px;
+      background-color: #088178;
+      border-radius: 5px;
+      & img {
+        font-size: 16px;
+        height: 20px;
+      }
     }
   }
 }

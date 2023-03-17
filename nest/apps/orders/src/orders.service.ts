@@ -24,13 +24,13 @@ export class OrdersService implements IOrdersService {
 
     for (let i = 0; i < order.cart.length; i++) {
       const item = order.cart[i];
-      const { data } = await lastValueFrom(
+      const updateProductStock = await lastValueFrom(
         this.productClient.send('update-product-stock', {
           id: item.productId,
           quantity: item.quantity,
         }),
       );
-      if (!data) {
+      if (!updateProductStock) {
         throw new BadRequestException('Product not enough stock');
       }
     }
@@ -52,7 +52,8 @@ export class OrdersService implements IOrdersService {
   }
 
   async updateOrder(id: string, order: Order): Promise<Order> {
-    return this.ordersRepo.updateOne({ _id: id }, order);
+    // return this.ordersRepo.updateOne({ _id: id }, order);
+    throw new Error('Method not implemented.');
   }
 
   async deleteOrder(id: string): Promise<void> {

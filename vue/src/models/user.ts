@@ -2,8 +2,9 @@ export class User {
   _id: string;
   email: string;
   isAdmin: boolean;
-  name: string;
+  name?: string;
   image: string;
+  address?: string;
   createdAt: string;
   updatedAt: string;
 
@@ -13,6 +14,7 @@ export class User {
     isAdmin = false,
     name = "",
     image = "",
+    address = "",
     createdAt = "",
     updatedAt = ""
   ) {
@@ -21,6 +23,7 @@ export class User {
     this.isAdmin = isAdmin;
     this.name = name;
     this.image = image;
+    this.address = address;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }

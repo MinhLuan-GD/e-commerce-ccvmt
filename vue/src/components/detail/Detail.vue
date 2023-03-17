@@ -1,5 +1,8 @@
 <template>
-  <div :class="$style.container">
+  <div v-if="!$route.query.id || !productFound" :class="$style.notfound">
+    <span>Không tìm thấy sản phẩm</span>
+  </div>
+  <div v-else :class="$style.container">
     <div :class="$style.singlepropimage">
       <img :src="getMainImageUrl(mainImage)" id="MainImg" alt="" />
 
@@ -29,8 +32,10 @@
         <option>M</option>
         <option>S</option>
       </select>
-      <input type="number" value="1" />
-      <button :class="$style.normal">Thêm vào giỏ hàng</button>
+      <input v-model="quantity" type="number" />
+      <button :class="$style.normal" @click="() => setCart()">
+        Thêm vào giỏ hàng
+      </button>
       <h4>Mô tả sản phẩm</h4>
       <pre>{{ description }}</pre>
     </div>
@@ -42,27 +47,43 @@
 </template>
 
 <script lang="ts">
-import { getProduct } from "@/api/products";
+import { getProduct } from "@/api/product";
 import { Product } from "@/models/product";
+import store from "@/store";
 import { Vue } from "vue-class-component";
 
 export default class Detail extends Vue {
   product: Product = new Product();
   description: string | Document = "";
   mainImage = "";
+  productFound = true;
+  quantity = 1;
 
   created() {
     const id = this.$route.query.id as string;
     if (id) {
-      getProduct(id).then(({ data }) => {
-        this.mainImage = data.images.filter((i) => i.isMain)[0].imageUrl;
-        this.product = data;
-        this.description = new DOMParser().parseFromString(
-          data.description,
-          "text/html"
-        ).body.textContent as string;
-      });
+      getProduct(id)
+        .then((res) => {
+          this.mainImage = res.data.images.filter((i) => i.isMain)[0].imageUrl;
+          this.product = res.data;
+          this.description = new DOMParser().parseFromString(
+            res.data.description,
+            "text/html"
+          ).body.textContent as string;
+        })
+        .catch((_err) => {
+          this.productFound = false;
+        });
     }
+  }
+
+  setCart() {
+    const cartItem = {
+      product: this.product,
+      quantity: this.quantity,
+    };
+    store.dispatch("pushToCart", cartItem);
+    alert(`Đã thêm ${this.quantity} ${this.product.title} vào giỏ hàng`);
   }
 
   getMainImageUrl(url: string): string {
@@ -89,6 +110,19 @@ export default class Detail extends Vue {
 </script>
 
 <style lang="scss" module>
+.notfound {
+  text-align: center;
+  margin-top: 50px;
+  height: 380px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & span {
+    font-size: 60px;
+    font-weight: 600;
+    color: #000;
+  }
+}
 .container {
   display: flex;
   margin-top: 20px;

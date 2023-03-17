@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Order } from 'apps/orders/src/schemas/order.schema';
 import { ICategoriesService } from './categories.interface';
 import { CategoriesRepository } from './categories.repository';
 import { CreateCategoryDto } from './dtos/create-category.dto';
@@ -13,8 +12,8 @@ export class CategoriesService implements ICategoriesService {
     return this.categoryRepositories.create(category);
   }
 
-  async getCategories(): Promise<Category[]> {
-    return this.categoryRepositories.find({});
+  async getCategories(query: any, limit?: number): Promise<Category[]> {
+    return this.categoryRepositories.find(query, undefined, limit);
   }
 
   async getCategoryById(id: string): Promise<Category> {

@@ -30,6 +30,9 @@ export class User {
   @Prop({ default: '' })
   image: string;
 
+  @Prop({ default: '' })
+  address: string;
+
   @Prop()
   age?: number;
 

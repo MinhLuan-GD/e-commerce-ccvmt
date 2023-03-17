@@ -3,7 +3,11 @@
     <h2>Giỏ hàng của bạn</h2>
     <p>Hãy nhập mã giảm giá để được nhiều ưu đãi giảm 70%</p>
   </div>
-  <div :class="$style.cart">
+  <div :class="$style.emptyCart" v-if="$store.state.cart.length === 0">
+    Giỏ hàng của bạn đang trống&nbsp;
+    <span @click="() => $router.push('/')">quay lại shop</span>
+  </div>
+  <div v-else :class="$style.cart">
     <table width="100%">
       <thead>
         <tr>
@@ -16,37 +20,21 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr v-for="item in $store.state.cart" :key="item.product._id">
           <td>
-            <img src="@/assets/img/icon/cancel.png" alt="search" />
+            <img
+              @click="() => deleteCartItem(item.product._id)"
+              src="@/assets/img/icon/cancel.png"
+              alt="delete"
+            />
           </td>
-          <td><img src="@/assets/img/products/f2.jpg" alt="" /></td>
-          <td>Áo thun</td>
-          <td>139.000</td>
-          <td><input type="number" value="1" /></td>
-          <td>130.000</td>
-        </tr>
-
-        <tr>
           <td>
-            <img src="@/assets/img/icon/cancel.png" alt="search" />
+            <img :src="productImage(item.product)" alt="" />
           </td>
-          <td><img src="@/assets/img/products/f3.jpg" alt="" /></td>
-          <td>Áo thun</td>
-          <td>139.000</td>
-          <td><input type="number" value="1" /></td>
-          <td>130.000</td>
-        </tr>
-
-        <tr>
-          <td>
-            <img src="@/assets/img/icon/cancel.png" alt="search" />
-          </td>
-          <td><img src="@/assets/img/products/f4.jpg" alt="" /></td>
-          <td>Áo thun</td>
-          <td>139.000</td>
-          <td><input type="number" value="1" /></td>
-          <td>130.000</td>
+          <td>{{ item.product.title }}</td>
+          <td>{{ item.product.price }}đ</td>
+          <td><input type="number" v-model="item.quantity" /></td>
+          <td>{{ item.product.price * item.quantity }}đ</td>
         </tr>
       </tbody>
     </table>
@@ -58,7 +46,7 @@
     </thead>
   </div>
 
-  <div :class="$style.cartadd">
+  <div v-if="$store.state.cart.length !== 0" :class="$style.cartadd">
     <div :class="$style.coupon">
       <table>
         <h3>Mã giảm giá</h3>
@@ -77,11 +65,11 @@
       <table>
         <tr>
           <td>Tổng tiền</td>
-          <td>335.000</td>
+          <td>{{ toStringCost(total()) }}</td>
         </tr>
         <tr>
           <td>Mã giảm giá</td>
-          <td>35.000</td>
+          <td>0.0</td>
         </tr>
 
         <tr>
@@ -96,25 +84,77 @@
           </td>
           <td>
             <strong>
-              <p>355.000</p>
+              <p>{{ toStringCost(total()) }}</p>
             </strong>
           </td>
         </tr>
       </table>
-      <button :class="$style.normal">Đặt hàng</button>
+      <button @click="order" :class="$style.normal">Đặt hàng</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { createOrder } from "@/api/order";
+import { Order } from "@/models/order";
+import { Product } from "@/models/product";
+import { ProductImage } from "@/models/product-image";
+import store from "@/store";
 import { Vue } from "vue-class-component";
 
-export default class Cart extends Vue {}
+export default class Cart extends Vue {
+  productImage(product: Product): string {
+    const img = product.images.find((img) => img.isMain) as ProductImage;
+    return `${process.env.VUE_APP_THUMBOR_URL}300x300/products/images/${img.imageUrl}`;
+  }
+
+  deleteCartItem(id: string) {
+    store.dispatch("popFromCart", id);
+  }
+
+  total() {
+    return this.$store.state.cart.reduce(
+      (v, i) => v + i.product.price * i.quantity,
+      0
+    );
+  }
+
+  toStringCost(cost: number) {
+    return cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ";
+  }
+
+  order() {
+    const user = store.state.user;
+    if (user && user.address) {
+      const newOrder: Order = {
+        cart: store.state.cart.map((item) => {
+          return {
+            image: item.product.images.filter((img) => img.isMain)[0].imageUrl,
+            price: item.product.price,
+            productId: item.product._id,
+            title: item.product.title,
+            quantity: item.quantity,
+          };
+        }),
+        userId: user._id,
+        shippingAddress: user.address,
+      };
+      createOrder(newOrder)
+        .then(() => {
+          store.dispatch("clearCart");
+          this.$router.push("/");
+        })
+        .catch(() => {
+          alert("Đặt hàng thất bại");
+        });
+    }
+  }
+}
 </script>
 
 <style lang="scss" module>
 .container {
-  background-image: url(@/assets/img/banner/banner.png);
+  background-image: url("@/assets/img/banner/banner.png");
   width: 100%;
   height: 40vh;
   background-size: cover;
@@ -136,6 +176,21 @@ export default class Cart extends Vue {}
     font-style: italic;
   }
 }
+.emptyCart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  height: 300px;
+  & span {
+    color: #ef3636;
+    font-style: italic;
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+}
 .cart {
   overflow: auto;
   padding: 40px 80px;
@@ -144,42 +199,35 @@ export default class Cart extends Vue {}
     width: 100%;
     border-collapse: collapse;
     table-layout: fixed;
-    white-space: nowrap;
-
-    img {
-      width: 50%;
-      font-weight: 600px;
+    & td:not(:nth-child(3)) {
+      text-align: center;
     }
-
     & td:nth-child(1) {
       width: 100px;
-      text-align: center;
       padding: 10px;
+      & img {
+        width: 50%;
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
     & td:nth-child(2) {
-      width: 250px;
-      text-align: center;
-    }
-    &e td:nth-child(3) {
-      width: 250px;
-      text-align: center;
-    }
-    & td:nth-child(4) {
-      width: 250px;
-      text-align: center;
-    }
-
-    & td:nth-child(5) {
-      width: 250px;
-      text-align: center;
-    }
-    & td:nth-child(6) {
       width: 200px;
-      text-align: center;
+      & img {
+        width: 60%;
+      }
+    }
+    & td:nth-child(3) {
+      width: 560px;
+      word-wrap: break-word;
     }
     & td:nth-child(5) input {
       width: 70px;
       padding: 10px 5px 10px 15px;
+      &:hover {
+        border: 1px solid #ef3636;
+      }
     }
     & thead {
       border: 1px solid #e2e9e1;

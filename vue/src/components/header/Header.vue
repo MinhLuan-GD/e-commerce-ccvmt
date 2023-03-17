@@ -6,13 +6,13 @@
     <div :class="$style.navbar">
       <input type="text" placeholder=" Nhập sản phẩm cần tìm" />
       <div
-        @click="(e) => $router.replace('/search')"
+        @click="() => $router.replace('/search')"
         :class="$style['search-icon']"
       >
         <img src="@/assets/img/icon/search.png" alt="search" />
       </div>
       <div
-        @click="(e) => $router.replace('/')"
+        @click="() => $router.replace('/')"
         :class="
           activity === 'home'
             ? `${$style.item} ${$style.activate}`
@@ -23,23 +23,26 @@
       </div>
 
       <div
-        @click="(e) => $router.replace('/shop')"
         :class="
           activity === 'shop'
             ? `${$style.item} ${$style.dropdown} ${$style.activate}`
             : `${$style.item} ${$style.dropdown}`
         "
       >
-        Shop
+        <span @click="() => $router.replace('/shop')">Shop</span>
         <div :class="$style.content">
-          <p>Áo thun</p>
-          <p>Giày dép</p>
-          <p>Phụ kiện</p>
+          <p
+            v-for="cate in $store.state['3cate']"
+            :key="cate._id"
+            @click="() => $router.replace(`/shop?cate=${cate._id}`)"
+          >
+            {{ cate.title }}
+          </p>
         </div>
       </div>
 
       <div
-        @click="(e) => $router.replace('/contact')"
+        @click="() => $router.replace('/contact')"
         :class="
           activity === 'contact'
             ? `${$style.item} ${$style.activate}`
@@ -48,10 +51,25 @@
       >
         Contact
       </div>
-      <div @click="(e) => $router.replace('/cart')" :class="$style.item">
+      <div @click="() => $router.replace('/cart')" :class="$style.item">
         <img src="@/assets/img/bag.png" alt="bag" />
       </div>
-      <div @click="(e) => $router.replace('/login')" :class="$style.item">
+      <div
+        v-if="$store.state.user"
+        :class="`${$style.item} ${$style.dropdown}`"
+      >
+        {{
+          $store.state.user.name
+            ? $store.state.user.name
+            : $store.state.user.email
+        }}
+        <div :class="$style.content">
+          <p @click="() => $router.replace('/profile')">Profile</p>
+          <p @click="() => $router.replace('/order')">Order</p>
+          <p @click="logout">Logout</p>
+        </div>
+      </div>
+      <div v-else @click="() => $router.replace('/login')" :class="$style.item">
         <img
           src="@/assets/img/user.png"
           width="25px"
@@ -64,6 +82,7 @@
 </template>
 
 <script lang="ts">
+import store from "@/store";
 import { Options, Vue } from "vue-class-component";
 
 @Options({
@@ -73,6 +92,11 @@ import { Options, Vue } from "vue-class-component";
 })
 export default class Header extends Vue {
   activity!: string;
+
+  logout() {
+    window.location.href = `${process.env.VUE_APP_API_URL}auth/logout`;
+    store.dispatch("logout");
+  }
 }
 </script>
 
@@ -140,6 +164,7 @@ export default class Header extends Vue {
         & p {
           font-size: 16px;
           cursor: default;
+          color: #000;
           padding: 5px 10px;
           margin: 5px 0;
           &:hover {

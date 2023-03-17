@@ -4,6 +4,19 @@
   </div>
 </template>
 
+<script lang="ts">
+import { Vue } from "vue-class-component";
+import store from "./store";
+
+export default class App extends Vue {
+  created() {
+    store.dispatch("getUser");
+    store.dispatch("getThreeCate");
+    store.dispatch("getLocalCart");
+  }
+}
+</script>
+
 <style lang="scss">
 * {
   padding: 0;

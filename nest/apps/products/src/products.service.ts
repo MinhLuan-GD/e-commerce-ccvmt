@@ -38,8 +38,8 @@ export class ProductsService implements IProductsService {
 
   async updateProductStock(id: string, quantity: number): Promise<boolean> {
     const product = await this.productRepo.updateOne(
-      { _id: id, quantity: { $gte: quantity } },
-      { $inc: { quantity: -quantity } },
+      { _id: id, countInStock: { $gte: quantity } },
+      { $inc: { countInStock: -quantity } },
     );
     return !!product;
   }
