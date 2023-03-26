@@ -9,7 +9,7 @@ RUN yarn
 
 COPY --chown=node:node . .
 
-RUN yarn build
+RUN yarn build products
 
 USER node
 
@@ -19,6 +19,8 @@ ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /app
+
+COPY --chown=node:node --from=development /app/package.json ./package.json
 
 RUN yarn install --only=production
 

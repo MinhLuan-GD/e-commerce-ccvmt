@@ -20,7 +20,10 @@ export class CategoriesService implements ICategoriesService {
     return this.categoryRepositories.getOne({ _id: id });
   }
 
-  async updateCategory(id: string, category: Category): Promise<Category> {
+  async updateCategory(
+    id: string,
+    category: Category,
+  ): Promise<Category | null> {
     return this.categoryRepositories.updateOne({ _id: id }, category);
   }
 
