@@ -131,7 +131,6 @@ services:
     image: mongo-express
     depends_on:
       - mongo-primary
-    restart: always
     ports:
       - 8081:8081
     environment:
